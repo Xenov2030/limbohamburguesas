@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limbo Burgers - Las mejores hamburguesas de la ciudad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="https://emojiapi.dev/api/v1/hamburger/64.png">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=50&h=50&fit=crop&crop=center" alt="Logo">
+                🍔 Limbo Burgers
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#hero">Inicio</a></li>
+                <li><a href="#about">Nosotros</a></li>
+                <li><a href="#menu">Menú</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+            <div class="burger" id="burger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Bienvenido a <span>Limbo Burgers</span></h1>
+            <p class="hero-subtitle">Hamburguesas irresistibles hechas con pasión</p>
+            <div class="hero-buttons">
+                <a href="#menu" class="btn primary">Explorar Menú</a>
+                <a href="https://wa.me/5492615349682" class="btn secondary" target="_blank">
+                    📱 Pedir Ya
+                </a>
+            </div>
+        </div>
+        <div class="scroll-indicator" style="padding-top: 30px;">
+            <span>Desliza para descubrir</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="section-title">Nuestra Historia</h2>
+                    <p>En Limbo Burgers, combinamos la pasión por la cocina con la creatividad para ofrecerte hamburguesas inolvidables. Desde 2023, trabajamos para hacer de cada bocado una experiencia celestial.</p>
+                    <p>Utilizamos ingredientes frescos y de primera calidad, carne 100% argentina y recetas que han sido perfeccionadas para brindarte el mejor sabor en cada hamburguesa.</p>
+                    
+                    <div class="stats">
+                        <div class="stat-item">
+                            <h3>500+</h3>
+                            <p>Clientes felices</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>100%</h3>
+                            <p>Carne Argentina</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>24/7</h3>
+                            <p>Pedidos Online</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=500&h=400&fit=crop" alt="Interior del restaurante">
+                    <div class="image-overlay">
+                        <div class="hours-card">
+                            <h3>⏰ Horarios</h3>
+                            <p><strong>Lunes a Domingo</strong></p>
+                            <p>12:00 - 23:00</p>
+                            <p>🚚 Delivery hasta 24:00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MENU -->
+    <section id="menu" class="menu">
+        <div class="container">
+            <h2 class="section-title">Menú de Hamburguesas</h2>
+            <p class="menu-subtitle">Cada hamburguesa es una obra maestra del sabor</p>
+            
+            <div class="menu-filter">
+                <button class="filter-btn active" data-filter="all">Todas</button>
+                <button class="filter-btn" data-filter="clasicas">Clásicas</button>
+                <button class="filter-btn" data-filter="premium">Premium</button>
+                <button class="filter-btn" data-filter="veggie">Veggie</button>
+            </div>
+
+            <div class="menu-grid" id="menuGrid">
+                <!-- Hamburguesas -->
+                <div class="menu-item" data-category="clasicas">
+                    <div class="menu-image">
+                        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&h=200&fit=crop" alt="Clásica Limbo">
+                        <div class="menu-badge">🔥 Popular</div>
+                    </div>
+                    <div class="menu-info">
+                        <h3>Clásica Limbo</h3>
+                        <p>Carne 100% vacuna, queso cheddar, lechuga, tomate y nuestra salsa secreta</p>
+                        <div class="menu-details">
+                            <span class="price">$3,500</span>
+                            <button class="add-to-order" onclick="addToOrder('Clásica Limbo', 3500)">
+                                🛒 Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="premium">
+                    <div class="menu-image">
+                        <img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=300&h=200&fit=crop" alt="Infernal BBQ">
+                        <div class="menu-badge premium">👑 Premium</div>
+                    </div>
+                    <div class="menu-info">
+                        <h3>Infernal BBQ</h3>
+                        <p>Doble carne, cebolla caramelizada, bacon crocante y salsa barbacoa</p>
+                        <div class="menu-details">
+                            <span class="price">$4,200</span>
+                            <button class="add-to-order" onclick="addToOrder('Infernal BBQ', 4200)">
+                                🛒 Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="veggie">
+                    <div class="menu-image">
+                        <img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=300&h=200&fit=crop" alt="Veggie Delight">
+                        <div class="menu-badge veggie">🌱 Veggie</div>
+                    </div>
+                    <div class="menu-info">
+                        <h3>Veggie Delight</h3>
+                        <p>Hamburguesa de garbanzos, palta, rúcula fresca y hummus de remolacha</p>
+                        <div class="menu-details">
+                            <span class="price">$3,800</span>
+                            <button class="add-to-order" onclick="addToOrder('Veggie Delight', 3800)">
+                                🛒 Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="premium">
+                    <div class="menu-image">
+                        <img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=300&h=200&fit=crop" alt="Cheese Explosion">
+                        <div class="menu-badge">🧀 Especial</div>
+                    </div>
+                    <div class="menu-info">
+                        <h3>Cheese Explosion</h3>
+                        <p>Triple queso: cheddar, mozzarella y provoleta fundida con carne premium</p>
+                        <div class="menu-details">
+                            <span class="price">$4,000</span>
+                            <button class="add-to-order" onclick="addToOrder('Cheese Explosion', 4000)">
+                                🛒 Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="clasicas">
+                    <div class="menu-image">
+                        <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=300&h=200&fit=crop" alt="Spicy Hell">
+                        <div class="menu-badge spicy">🌶️ Picante</div>
+                    </div>
+                    <div class="menu-info">
+                        <h3>Spicy Hell</h3>
+                        <p>Carne especiada, jalapeños, salsa picante y queso pepper jack</p>
+                        <div class="menu-details">
+                            <span class="price">$3,700</span>
+                            <button class="add-to-order" onclick="addToOrder('Spicy Hell', 3700)">
+                                🛒 Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="premium">
+                    <div class="menu-image">
+                        <img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=300&h=200&fit=crop" alt="Mushroom King">
+                        <div class="menu-badge">🍄 Gourmet</div>
+                    </div>
+                    <div class="menu-info">
+                        <h3>Mushroom King</h3>
+                        <p>Hongos portobello, queso brie, rúcula, tomate y salsa de mostaza</p>
+                        <div class="menu-details">
+                            <span class="price">$4,100</span>
+                            <button class="add-to-order" onclick="addToOrder('Mushroom King', 4100)">
+                                🛒 Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carrito flotante -->
+            <div class="cart-summary" id="cartSummary">
+                <div class="cart-header">
+                    <h3>🛒 Tu Pedido</h3>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+                <div class="cart-items" id="cartItems"></div>
+                <div class="cart-total">
+                    <strong>Total: $<span id="cartTotal">0</span></strong>
+                </div>
+                <button class="order-whatsapp" onclick="sendWhatsAppOrder()">
+                    📱 Enviar por WhatsApp
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>¿Listo para el paraíso del sabor?</h2>
+                <p>Haz tu pedido ahora y disfruta de nuestras deliciosas hamburguesas</p>
+                <a href="https://wa.me/5492615349682" class="btn cta-main" target="_blank">
+                    🚀 Haga su Pedido Ahora
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=40&h=40&fit=crop&crop=center" alt="Logo">
+                        🍔 Limbo Burgers
+                    </div>
+                    <p>El sabor que te lleva al cielo (o al infierno).</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/" title="Facebook"><img src="RECURSOS VISUALES/facebook.png" alt=""></a>
+                        <a href="https://www.instagram.com/" title="Instagram"><img src="RECURSOS VISUALES/logotipo-de-instagram.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>📍 Ubicación</h3>
+                    <p>Mendoza, Argentina</p>
+                    <p>Av. San Martín 1234</p>
+                    <p>📞 +54 9 261 534 9682</p>
+                </div>
+                <div class="footer-section">
+                    <h3>⏰ Horarios</h3>
+                    <p><strong>Lunes a Domingo</strong></p>
+                    <p>12:00 - 23:00</p>
+                    <p>🚚 Delivery hasta 24:00</p>
+                </div>
+                <div class="footer-section">
+                    <h3>🍔 Información</h3>
+                    <p>Carne 100% Argentina</p>
+                    <p>Ingredientes frescos</p>
+                    <p>Delivery gratis +$5000</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Limbo Burgers. Todos los derechos reservados. Desarrollado por Nicolas Aguirres</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WHATSAPP FLOTANTE -->
+    <a href="https://wa.me/5492615349682" class="whatsapp-float" target="_blank" title="Contactar por WhatsApp">
+        <img src="RECURSOS VISUALES/whastapp.png" alt="">
+        <span class="whatsapp-text">¡Chatea con nosotros!</span>
+    </a>
+
+    <script src="script.js"></script>
+</body>
+</html>
