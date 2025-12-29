@@ -1,53 +1,198 @@
 /**
- * LIMBO BURGERS - JS Final (Versión 5.0 + Horario Comercial Dinámico)
+ * LIMBO BURGERS - JS ELITE 7.0
  */
 
-// --- ELEMENTOS ---
-const burger = document.getElementById('burger');
-const navLinks = document.getElementById('navLinks');
-const cartToggle = document.getElementById('cartToggle');
-const cartDropdown = document.getElementById('cartDropdown');
-const sendOrderBtn = document.getElementById('sendOrder'); // Botón de WhatsApp
-const heroStatus = document.querySelector('.hero p'); // Párrafo de descripción en Hero
-
-// --- GESTIÓN DEL PEDIDO ---
 let cart = [];
+let currentProduct = null;
 
-// --- LÓGICA DE HORARIO COMERCIAL ---
+// --- ELEMENTOS ---
+const cartDropdown = document.getElementById('cartDropdown');
+const cartToggle = document.getElementById('cartToggle');
+const sendOrderBtn = document.getElementById('sendOrder');
+const heroStatus = document.getElementById('status-business');
+
+// --- LÓGICA DE HORARIO ---
 function checkBusinessHours() {
     const now = new Date();
     const currentHour = now.getHours();
-    
-    // Regla: Abre todos los días de 12:00 a 23:00
     const isOpen = currentHour >= 12 && currentHour < 23;
 
     if (sendOrderBtn) {
         if (isOpen) {
             sendOrderBtn.disabled = false;
             sendOrderBtn.textContent = 'Pedir por WhatsApp';
-            sendOrderBtn.style.opacity = '1';
-            sendOrderBtn.style.cursor = 'pointer';
-            sendOrderBtn.style.filter = 'grayscale(0%)';
-            
             if (heroStatus) heroStatus.innerHTML = '🔥 ¡Estamos cocinando en vivo!';
         } else {
             sendOrderBtn.disabled = true;
-            sendOrderBtn.textContent = 'Local Cerrado (Abre 12:00hs)';
-            sendOrderBtn.style.opacity = '0.6';
-            sendOrderBtn.style.cursor = 'not-allowed';
-            sendOrderBtn.style.filter = 'grayscale(100%)';
-            
+            sendOrderBtn.textContent = 'Local Cerrado (12:00 a 23:00)';
             if (heroStatus) heroStatus.innerHTML = '💤 Abrimos a las 12:00hs';
         }
     }
 }
 
-// --- LÓGICA MENÚ MÓVIL ---
-burger.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
+// --- GESTIÓN DEL MODAL ---
+function openModal(name, price, category) {
+    currentProduct = { name, basePrice: price, totalPrice: price, category, customizations: {} };
+    const modal = document.getElementById('productModal');
+    const container = document.getElementById('customizationOptions');
+    document.getElementById('modalTitle').textContent = name;
+    document.getElementById('modalCurrentPrice').textContent = price.toLocaleString('es-AR');
+    
+    container.innerHTML = '';
+
+    if (category === 'burgers') {
+        container.innerHTML = `
+            <div class="opt-group">
+                <label>Punto de la carne:</label>
+                <select id="meatPoint">
+                    <option value="A punto">A punto</option>
+                    <option value="Jugosa">Jugosa</option>
+                    <option value="Cocida">Cocida</option>
+                </select>
+            </div>
+            <div class="opt-group">
+                <label>Extras:</label>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="extraCheddar" onchange="updateModalPrice(500, this)">
+                    <label for="extraCheddar">Extra Cheddar (+$500)</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="extraBacon" onchange="updateModalPrice(800, this)">
+                    <label for="extraBacon">Extra Bacon (+$800)</label>
+                </div>
+            </div>
+        `;
+    } else {
+        container.innerHTML = `
+            <div class="opt-group">
+                <label>¿Algo más?</label>
+                <select id="simpleOption">
+                    <option value="Sin hielos / Normal">Sin hielos / Normal</option>
+                    <option value="Con mucho hielo">Con mucho hielo</option>
+                </select>
+            </div>
+        `;
+    }
+
+    modal.style.display = 'flex';
+}
+
+function updateModalPrice(extra, checkbox) {
+    if (checkbox.checked) {
+        currentProduct.totalPrice += extra;
+    } else {
+        currentProduct.totalPrice -= extra;
+    }
+    document.getElementById('modalCurrentPrice').textContent = currentProduct.totalPrice.toLocaleString('es-AR');
+}
+
+function closeModal() {
+    document.getElementById('productModal').style.display = 'none';
+}
+
+// --- CARRITO ---
+document.getElementById('confirmAdd').onclick = () => {
+    let detail = "";
+    if (currentProduct.category === 'burgers') {
+        const point = document.getElementById('meatPoint').value;
+        const cheddar = document.getElementById('extraCheddar').checked ? "Extra Cheddar" : "";
+        const bacon = document.getElementById('extraBacon').checked ? "Extra Bacon" : "";
+        detail = `Punto: ${point}${cheddar ? ' | ' + cheddar : ''}${bacon ? ' | ' + bacon : ''}`;
+    } else {
+        detail = document.getElementById('simpleOption').value;
+    }
+
+    cart.push({
+        name: currentProduct.name,
+        price: currentProduct.totalPrice,
+        detail: detail,
+        quantity: 1
+    });
+
+    updateCart();
+    closeModal();
+    cartDropdown.classList.add('active');
+};
+
+function updateCart() {
+    const cartItems = document.getElementById('cartItems');
+    const cartCount = document.getElementById('cartCount');
+    const cartTotal = document.getElementById('cartTotal');
+    
+    cartItems.innerHTML = '';
+    let total = 0;
+    
+    cart.forEach((item, index) => {
+        total += item.price;
+        cartItems.innerHTML += `
+            <div class="cart-item">
+                <div>
+                    <strong>${item.name}</strong><br>
+                    <small>${item.detail}</small>
+                </div>
+                <div>
+                    $${item.price.toLocaleString('es-AR')}
+                    <button onclick="removeItem(${index})">❌</button>
+                </div>
+            </div>
+        `;
+    });
+
+    cartCount.textContent = cart.length;
+    cartTotal.textContent = total.toLocaleString('es-AR');
+    localStorage.setItem('limbo_cart_v7', JSON.stringify(cart));
+}
+
+function removeItem(index) {
+    cart.splice(index, 1);
+    updateCart();
+}
+
+// --- WHATSAPP PRO ---
+function sendWhatsAppOrder() {
+    if (cart.length === 0) return alert("El carrito está vacío.");
+    
+    let message = "🍔 *Nuevo Pedido - Limbo Burgers*\n\n";
+    let total = 0;
+
+    cart.forEach(item => {
+        message += `1x *${item.name}* (${item.detail}) - $${item.price.toLocaleString('es-AR')}\n`;
+        total += item.price;
+    });
+
+    message += `\n*Total: $${total.toLocaleString('es-AR')}*`;
+    message += `\n\n_Enviado desde el sitio web._`;
+
+    const phone = "5492615349682";
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+}
+
+// --- FILTROS ---
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelector('.filter-btn.active').classList.remove('active');
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        
+        document.querySelectorAll('.menu-item').forEach(item => {
+            if (filter === 'all' || item.dataset.category === filter) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
 });
 
-// --- LÓGICA CARRITO (ABRIR/CERRAR) ---
+// Inicialización
+document.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('limbo_cart_v7');
+    if (saved) cart = JSON.parse(saved);
+    updateCart();
+    checkBusinessHours();
+});
+
+// Toggle Carrito
 cartToggle.addEventListener('click', (e) => {
     e.stopPropagation();
     cartDropdown.classList.toggle('active');
@@ -58,120 +203,3 @@ document.addEventListener('click', (e) => {
         cartDropdown.classList.remove('active');
     }
 });
-
-/**
- * Inicializa el carrito buscando datos en localStorage.
- */
-function initCart() {
-    const savedCart = localStorage.getItem('limbo_cart');
-    if (savedCart) {
-        try {
-            cart = JSON.parse(savedCart);
-            updateCart();
-        } catch (error) {
-            console.error("Error al cargar el carrito:", error);
-            cart = [];
-        }
-    }
-    // Verificamos el horario apenas carga la página
-    checkBusinessHours();
-    // Opcional: Re-verificar cada minuto por si el usuario deja la página abierta
-    setInterval(checkBusinessHours, 60000);
-}
-
-function addToOrder(name, price) {
-    const existingItem = cart.find(item => item.name === name);
-    
-    if (existingItem) {
-        existingItem.quantity++;
-    } else {
-        cart.push({ name, price, quantity: 1 });
-    }
-    
-    updateCart();
-    cartDropdown.classList.add('active');
-}
-
-function updateCart() {
-    const cartItems = document.getElementById('cartItems');
-    const cartCount = document.getElementById('cartCount');
-    const cartTotal = document.getElementById('cartTotal');
-
-    if (!cartItems || !cartCount || !cartTotal) return;
-
-    cartItems.innerHTML = '';
-    let total = 0;
-    let count = 0;
-
-    cart.forEach(item => {
-        const itemSubtotal = item.price * item.quantity;
-        total += itemSubtotal;
-        count += item.quantity;
-
-        const div = document.createElement('div');
-        div.className = 'cart-item';
-        div.innerHTML = `
-            <span>${item.name} (x${item.quantity})</span>
-            <div>
-                <span style="margin-right:10px">$${itemSubtotal.toLocaleString('es-AR')}</span>
-                <button onclick="removeItem('${item.name}')" aria-label="Eliminar">❌</button>
-            </div>
-        `;
-        cartItems.appendChild(div);
-    });
-
-    cartCount.textContent = count;
-    cartTotal.textContent = total.toLocaleString('es-AR');
-
-    localStorage.setItem('limbo_cart', JSON.stringify(cart));
-}
-
-function removeItem(name) {
-    cart = cart.filter(item => item.name !== name);
-    updateCart();
-}
-
-// --- WHATSAPP ---
-function sendWhatsAppOrder() {
-    // Doble validación: Carrito vacío o local cerrado
-    const now = new Date();
-    const currentHour = now.getHours();
-    const isOpen = currentHour >= 12 && currentHour < 23;
-
-    if (cart.length === 0) return alert("Tu carrito está vacío.");
-    if (!isOpen) return alert("Lo sentimos, el local se encuentra cerrado en este momento.");
-
-    let message = "🍔 *Nuevo Pedido - Limbo Burgers*\n\n";
-    cart.forEach(item => {
-        message += `• ${item.name} x${item.quantity} - $${(item.price * item.quantity).toLocaleString('es-AR')}\n`;
-    });
-    
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    message += `\n*Total: $${total.toLocaleString('es-AR')}*`;
-    message += `\n\n_Enviado desde el sitio web._`;
-
-    window.open(`https://wa.me/5492615349682?text=${encodeURIComponent(message)}`, '_blank');
-}
-
-// --- FILTROS DE MENÚ ---
-const filterButtons = document.querySelectorAll('.filter-btn');
-const menuItems = document.querySelectorAll('.menu-item');
-
-filterButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-        filterButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.dataset.filter;
-
-        menuItems.forEach(item => {
-            if (filter === 'all' || item.dataset.category === filter) {
-                item.style.display = 'block';
-            } else {
-                item.style.display = 'none';
-            }
-        });
-    });
-});
-
-// --- EJECUCIÓN INICIAL ---
-document.addEventListener('DOMContentLoaded', initCart);

@@ -3,241 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Limbo Burgers | Premium Delivery</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #ffc107;
-            --dark-bg: #0a0a0a;
-            --dark-card: #1a1a1a;
-            --text-light: #f4f4f4;
-            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            background-color: var(--dark-bg); 
-            color: var(--text-light); 
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* HEADER & NAV */
-        header { 
-            background: rgba(0,0,0,0.95); 
-            padding: 1rem 5%; 
-            position: fixed; 
-            width: 100%; 
-            top: 0; 
-            z-index: 1000; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-bottom: 1px solid #333;
-            backdrop-filter: blur(10px);
-        }
-        .logo { font-weight: 800; font-size: 1.5rem; color: var(--primary); text-transform: uppercase; letter-spacing: 2px; }
-        nav ul { display: flex; list-style: none; gap: 20px; }
-        nav a { color: white; text-decoration: none; font-weight: 400; transition: var(--transition); }
-        nav a:hover { color: var(--primary); }
-
-        /* CARRITO DROPDOWN */
-        .cart-container { position: relative; }
-        #cartToggle { background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative; color: white; }
-        #cartCount { position: absolute; top: -10px; right: -10px; background: var(--primary); color: black; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; font-weight: bold; }
-        
-        .cart-dropdown { 
-            position: absolute; right: 0; top: 50px; width: 320px; background: var(--dark-card); 
-            border: 1px solid #333; padding: 20px; border-radius: 12px; display: none; 
-            box-shadow: 0 15px 40px rgba(0,0,0,0.7); 
-        }
-        .cart-dropdown.active { display: block; animation: slideIn 0.3s ease; }
-        @keyframes slideIn { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-        .cart-item { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.9rem; border-bottom: 1px solid #333; padding-bottom: 8px; align-items: center; }
-        .cart-item button { background: none; border: none; cursor: pointer; color: #ff4444; }
-
-        /* BOTÓN DE WHATSAPP CON ID SINCRONIZADO */
-        #sendOrder { 
-            width: 100%; padding: 14px; background: #25d366; color: white; border: none; 
-            border-radius: 8px; font-weight: 800; cursor: pointer; 
-            transition: var(--transition);
-            margin-top: 15px;
-            text-transform: uppercase;
-        }
-        #sendOrder:hover:not(:disabled) { background: #128c7e; transform: scale(1.02); }
-        #sendOrder:disabled { cursor: not-allowed; }
-
-        /* HERO SECTION */
-        .hero { 
-            height: 90vh; 
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?q=80&w=2071&auto=format&fit=crop'); 
-            background-size: cover; 
-            background-position: center; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            text-align: center; 
-            padding: 0 20px;
-        }
-        .hero h1 { font-size: clamp(2.5rem, 8vw, 5rem); margin-bottom: 15px; color: var(--primary); font-weight: 800; }
-        
-        /* ID inyectado para el estado de negocio */
-        #status-business { font-size: 1.4rem; max-width: 700px; color: #eee; font-weight: 300; }
-
-        /* MENU SECTION */
-        .section-title { text-align: center; padding: 60px 0 20px; font-size: 2.5rem; color: var(--primary); text-transform: uppercase; }
-        .menu-filters { display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
-        .filter-btn { background: #111; border: 1px solid var(--primary); color: white; padding: 10px 25px; cursor: pointer; transition: var(--transition); border-radius: 30px; font-size: 0.9rem; }
-        .filter-btn.active, .filter-btn:hover { background: var(--primary); color: black; font-weight: bold; }
-
-        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 0 5% 80px; max-width: 1400px; margin: 0 auto; }
-        .menu-item { background: var(--dark-card); border-radius: 20px; overflow: hidden; border: 1px solid #222; transition: var(--transition); position: relative; }
-        .menu-item:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
-        
-        .menu-img { width: 100%; height: 220px; background-color: #222; object-fit: cover; }
-        .menu-info { padding: 25px; }
-        .menu-info h3 { font-size: 1.5rem; margin-bottom: 10px; color: #fff; }
-        .menu-info p { color: #aaa; font-size: 0.9rem; height: 45px; overflow: hidden; }
-        .price { color: var(--primary); font-size: 1.4rem; font-weight: 800; margin: 15px 0; display: block; }
-        
-        .add-btn { width: 100%; padding: 12px; background: var(--primary); border: none; font-weight: 800; cursor: pointer; transition: var(--transition); border-radius: 0 0 15px 15px; }
-        .add-btn:hover { background: #fff; color: #000; }
-
-        /* FOOTER */
-        footer { background: #000; padding: 40px 5%; text-align: center; border-top: 1px solid #222; }
-        .social-links { margin-bottom: 20px; }
-        .social-links a { color: var(--primary); margin: 0 15px; text-decoration: none; font-size: 1.2rem; }
-
-        @media (max-width: 768px) {
-            header { padding: 1rem 20px; }
-            nav ul { display: none; }
-            #status-business { font-size: 1.1rem; }
-            .menu-grid { padding: 0 20px 60px; }
-        }
-    </style>
+    <title>Limbo Burgers | Nivel Definitivo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-    <header>
-        <div class="logo">Limbo Burgers</div>
-        <nav>
-            <ul id="navLinks">
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="#" class="logo">
+                    <span>LIMBO</span> BURGERS
+                </a>
+            </div>
+            <nav class="nav-links" id="navLinks">
                 <li><a href="#menu">Menú</a></li>
-                <li><a href="#contacto">Ubicación</a></li>
-            </ul>
-        </nav>
-        <div class="cart-container">
-            <button id="cartToggle" title="Ver Carrito">
-                🛒 <span id="cartCount">0</span>
-            </button>
-            <div class="cart-dropdown" id="cartDropdown">
-                <h4 style="color: var(--primary); margin-bottom: 10px;">Tu Pedido</h4>
-                <div id="cartItems">
-                    </div>
-                <div style="margin-top: 15px; font-weight: bold; border-top: 1px solid #444; padding-top: 10px; display: flex; justify-content: space-between;">
-                    <span>Total:</span>
-                    <span style="color: var(--primary)">$<span id="cartTotal">0</span></span>
+                <li><a href="#contacto">Contacto</a></li>
+            </nav>
+            <div class="header-actions">
+                <button class="cart-toggle" id="cartToggle">
+                    🛒 <span id="cartCount">0</span>
+                </button>
+                <div class="burger" id="burger">
+                    <span></span><span></span><span></span>
                 </div>
-                <button id="sendOrder" onclick="sendWhatsAppOrder()">Confirmar Pedido</button>
             </div>
         </div>
-        <div id="burger" style="cursor: pointer; display: none;">☰</div>
+        <div class="cart-dropdown" id="cartDropdown">
+            <h3>Tu Pedido</h3>
+            <div id="cartItems"></div>
+            <div class="cart-total">
+                Total: $<span id="cartTotal">0</span>
+            </div>
+            <button id="sendOrder" onclick="sendWhatsAppOrder()">Pedir por WhatsApp</button>
+        </div>
     </header>
 
     <section class="hero">
-        <h1>LIMBO BURGERS</h1>
-        <p id="status-business">Hamburguesas irresistibles que te llevarán al más allá.</p>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">El Sabor del <span>Infierno</span></h1>
+            <p id="status-business">🔥 ¡Estamos cocinando en vivo!</p>
+            <a href="#menu" class="cta-button">Ver Menú</a>
+        </div>
     </section>
 
-    <h2 class="section-title" id="menu">Nuestro Menú</h2>
-    
-    <div class="menu-filters">
-        <button class="filter-btn active" data-filter="all">Todas</button>
-        <button class="filter-btn" data-filter="burgers">Especiales</button>
-        <button class="filter-btn" data-filter="classic">Clásicas</button>
+    <section id="menu" class="container">
+        <h2 class="section-title">Nuestro Menú</h2>
+        <div class="menu-filters">
+            <button class="filter-btn active" data-filter="all">Todas</button>
+            <button class="filter-btn" data-filter="burgers">Hamburguesas</button>
+            <button class="filter-btn" data-filter="sides">Acompañamientos</button>
+            <button class="filter-btn" data-filter="drinks">Bebidas</button>
+        </div>
+
+        <div class="menu-grid">
+            <div class="menu-item" data-category="burgers">
+                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=500" alt="Clásica Limbo">
+                <div class="menu-info">
+                    <h3>Clásica Limbo</h3>
+                    <p>180g de carne premium, cheddar, lechuga y tomate.</p>
+                    <span class="price">$7.500</span>
+                </div>
+                <button class="add-btn" onclick="openModal('Clásica Limbo', 7500, 'burgers')">AGREGAR</button>
+            </div>
+
+            <div class="menu-item" data-category="sides">
+                <img src="https://images.unsplash.com/photo-1630384066252-19e1ad955494?q=80&w=500" alt="Papas Fritas">
+                <div class="menu-info">
+                    <h3>Papas Fritas Tradicionales</h3>
+                    <p>Corte bastón, súper crocantes.</p>
+                    <span class="price">$3.000</span>
+                </div>
+                <button class="add-btn" onclick="openModal('Papas Fritas', 3000, 'sides')">AGREGAR</button>
+            </div>
+
+            <div class="menu-item" data-category="sides">
+                <img src="https://images.unsplash.com/photo-1573014133633-560dd432ee64?q=80&w=500" alt="Papas Cheddar">
+                <div class="menu-info">
+                    <h3>Papas con Cheddar y Bacon</h3>
+                    <p>Bañadas en cheddar fundido y lluvia de bacon.</p>
+                    <span class="price">$4.500</span>
+                </div>
+                <button class="add-btn" onclick="openModal('Papas Cheddar', 4500, 'sides')">AGREGAR</button>
+            </div>
+
+            <div class="menu-item" data-category="sides">
+                <img src="https://images.unsplash.com/photo-1639024471283-03518883512d?q=80&w=500" alt="Aros Cebolla">
+                <div class="menu-info">
+                    <h3>Aros de Cebolla Crujientes</h3>
+                    <p>Crocantes y dorados, con salsa dip.</p>
+                    <span class="price">$3.800</span>
+                </div>
+                <button class="add-btn" onclick="openModal('Aros Cebolla', 3800, 'sides')">AGREGAR</button>
+            </div>
+
+            <div class="menu-item" data-category="drinks">
+                <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=500" alt="Gaseosa">
+                <div class="menu-info">
+                    <h3>Gaseosa 500ml</h3>
+                    <p>Línea Coca-Cola.</p>
+                    <span class="price">$1.500</span>
+                </div>
+                <button class="add-btn" onclick="openModal('Gaseosa 500ml', 1500, 'drinks')">AGREGAR</button>
+            </div>
+
+            <div class="menu-item" data-category="drinks">
+                <img src="https://images.unsplash.com/photo-1535958636474-b021ee887b13?q=80&w=500" alt="Cerveza">
+                <div class="menu-info">
+                    <h3>Cerveza Artesanal IPA</h3>
+                    <p>500ml de puro lúpulo mendocino.</p>
+                    <span class="price">$3.500</span>
+                </div>
+                <button class="add-btn" onclick="openModal('Cerveza IPA', 3500, 'drinks')">AGREGAR</button>
+            </div>
+        </div>
+    </section>
+
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Personaliza tu pedido</h2>
+            
+            <div id="customizationOptions">
+                </div>
+
+            <div class="modal-footer">
+                <span class="modal-price">Total: $<span id="modalCurrentPrice">0</span></span>
+                <button class="confirm-btn" id="confirmAdd">AGREGAR AL CARRITO</button>
+            </div>
+        </div>
     </div>
 
-    <main class="menu-grid">
-        <div class="menu-item" data-category="classic">
-            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=500" alt="Clásica Limbo" class="menu-img">
-            <div class="menu-info">
-                <h3>Clásica Limbo</h3>
-                <p>Medallón de 180g, lechuga hidropónica, tomate y mayonesa casera.</p>
-                <span class="price">$7.500</span>
-            </div>
-            <button class="add-btn" onclick="addToOrder('Clásica Limbo', 7500)">AGREGAR AL CARRITO</button>
-        </div>
-
-        <div class="menu-item" data-category="burgers">
-            <img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?q=80&w=500" alt="Infernal BBQ" class="menu-img">
-            <div class="menu-info">
-                <h3>Infernal BBQ</h3>
-                <p>Doble carne, cheddar, bacon ahumado y nuestra salsa BBQ secreta.</p>
-                <span class="price">$9.200</span>
-            </div>
-            <button class="add-btn" onclick="addToOrder('Infernal BBQ', 9200)">AGREGAR AL CARRITO</button>
-        </div>
-
-        <div class="menu-item" data-category="classic">
-            <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=500" alt="Veggie Delight" class="menu-img">
-            <div class="menu-info">
-                <h3>Veggie Delight</h3>
-                <p>Medallón de quinoa y lentejas, palta, cebolla morada y alioli.</p>
-                <span class="price">$8.100</span>
-            </div>
-            <button class="add-btn" onclick="addToOrder('Veggie Delight', 8100)">AGREGAR AL CARRITO</button>
-        </div>
-
-        <div class="menu-item" data-category="burgers">
-            <img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?q=80&w=500" alt="Cheese Explosion" class="menu-img">
-            <div class="menu-info">
-                <h3>Cheese Explosion</h3>
-                <p>Triple cheddar, queso provoleta fundido y emulsión de quesos.</p>
-                <span class="price">$9.800</span>
-            </div>
-            <button class="add-btn" onclick="addToOrder('Cheese Explosion', 9800)">AGREGAR AL CARRITO</button>
-        </div>
-
-        <div class="menu-item" data-category="burgers">
-            <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?q=80&w=500" alt="Spicy Hell" class="menu-img">
-            <div class="menu-info">
-                <h3>Spicy Hell</h3>
-                <p>Carne, jalapeños, salsa picante de la casa y cebollas crujientes.</p>
-                <span class="price">$8.900</span>
-            </div>
-            <button class="add-btn" onclick="addToOrder('Spicy Hell', 8900)">AGREGAR AL CARRITO</button>
-        </div>
-
-        <div class="menu-item" data-category="burgers">
-            <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?q=80&w=500" alt="Mushroom King" class="menu-img">
-            <div class="menu-info">
-                <h3>Mushroom King</h3>
-                <p>Medallón premium, salteado de hongos, queso suizo y rúcula.</p>
-                <span class="price">$9.500</span>
-            </div>
-            <button class="add-btn" onclick="addToOrder('Mushroom King', 9500)">AGREGAR AL CARRITO</button>
-        </div>
-    </main>
-
     <footer id="contacto">
-        <div class="social-links">
-            <a href="#">Instagram</a>
-            <a href="#">Facebook</a>
-        </div>
         <p>&copy; 2025 Limbo Burgers - El sabor del purgatorio</p>
-        <p style="font-size: 0.8rem; color: #555; margin-top: 10px;">Luján de Cuyo, Mendoza, Argentina</p>
     </footer>
 
     <script src="script.js"></script>
-    <script>
-        /** * NOTA TÉCNICA: He actualizado el script para apuntar a 'status-business'
-         * si el script.js externo usa 'heroStatus' o 'hero p'.
-         * Asegúrate de que en tu script.js la variable heroStatus sea:
-         * const heroStatus = document.getElementById('status-business');
-         */
-    </script>
 </body>
 </html>
