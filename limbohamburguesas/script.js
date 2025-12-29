@@ -1,5 +1,5 @@
 /**
- * LIMBO BURGERS - JS Final
+ * LIMBO BURGERS - JS Final (Versión 4.0 con Persistencia)
  */
 
 // --- ELEMENTOS ---
@@ -28,6 +28,23 @@ document.addEventListener('click', (e) => {
 
 // --- GESTIÓN DEL PEDIDO ---
 let cart = [];
+
+/**
+ * Inicializa el carrito buscando datos en localStorage.
+ * Se ejecuta al cargar la página.
+ */
+function initCart() {
+    const savedCart = localStorage.getItem('limbo_cart');
+    if (savedCart) {
+        try {
+            cart = JSON.parse(savedCart);
+            updateCart();
+        } catch (error) {
+            console.error("Error al cargar el carrito:", error);
+            cart = [];
+        }
+    }
+}
 
 function addToOrder(name, price) {
     const existingItem = cart.find(item => item.name === name);
@@ -72,6 +89,9 @@ function updateCart() {
 
     cartCount.textContent = count;
     cartTotal.textContent = total.toLocaleString('es-AR');
+
+    // PERSISTENCIA: Guardar estado actual en localStorage
+    localStorage.setItem('limbo_cart', JSON.stringify(cart));
 }
 
 function removeItem(name) {
@@ -114,3 +134,7 @@ filterButtons.forEach(btn => {
         });
     });
 });
+
+// --- EJECUCIÓN INICIAL ---
+// Llamamos a initCart cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', initCart);
