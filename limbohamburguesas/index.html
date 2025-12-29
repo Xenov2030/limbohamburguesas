@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Limbo Burgers v15.0 | The Final Sin</title>
+    <title>Limbo Burgers v16.0 | Final UX Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -17,38 +17,51 @@
 
     <section class="hero">
         <div class="hero-content">
-            <h1>PECADO EN <span>MENDOZA</span></h1>
-            <p>Parrilla encendida de 12:00 a 23:00 hs</p>
+            <h1>EL PECADO QUE <span>MERECES</span></h1>
+            <p>Mendoza, Argentina • Parrilla a Leña</p>
         </div>
     </section>
 
     <nav class="filters-container">
         <button class="filter-btn active" data-filter="all">TODOS</button>
         <button class="filter-btn" data-filter="burgers">BURGERS</button>
-        <button class="filter-btn" data-filter="veggie">VEGAN</button>
+        <button class="filter-btn" data-filter="veggie">VEGAN 🌱</button>
         <button class="filter-btn" data-filter="sides">SIDES</button>
         <button class="filter-btn" data-filter="drinks">BEBIDAS</button>
     </nav>
 
     <main class="container">
-        <div id="menu-grid" class="menu-grid">
-            </div>
+        <div id="menu-grid" class="menu-grid"></div>
     </main>
+
+    <section class="reviews">
+        <h2 class="section-title">TESTIMONIOS DE <span>PECADORES</span></h2>
+        <div class="reviews-container">
+            <div class="review-card">
+                <p>"La Limbus Quad es una obra de arte. El sabor ahumado es real."</p>
+                <span>- Franco M.</span>
+            </div>
+            <div class="review-card">
+                <p>"Increíble opción vegana, el falafel es el mejor de Mendoza."</p>
+                <span>- Lucia P.</span>
+            </div>
+        </div>
+    </section>
 
     <footer id="contact">
         <div class="footer-content">
             <div class="footer-section">
                 <h3 class="logo">LIMBO<span>BURGERS</span></h3>
-                <p>El sabor que te lleva al cielo.</p>
+                <p>Mendoza, Argentina - Av. San Martín 1234</p>
                 <div class="social-links">
                     <a href="#"><img src="RECURSOS VISUALES/facebook.png" alt="Facebook"></a>
                     <a href="#"><img src="RECURSOS VISUALES/logotipo-de-instagram.png" alt="Instagram"></a>
                 </div>
             </div>
             <div class="footer-section">
-                <h3>📍 UBICACIÓN</h3>
-                <p>Av. San Martín 1234 - Mendoza, Argentina</p>
-                <p>📞 +54 9 261 534 9682</p>
+                <h3>📍 HORARIOS</h3>
+                <p>Lunes a Domingos</p>
+                <p>12:00 a 23:00 hs</p>
             </div>
         </div>
         <div class="footer-bottom">
@@ -56,26 +69,26 @@
         </div>
     </footer>
 
-    <button class="cart-float" id="cartToggle">
+    <button class="cart-float pulse" id="cartToggle">
         🛒 <span id="cartCount">0</span>
     </button>
 
     <div class="cart-panel" id="cartPanel">
         <div class="cart-header">
-            <h2>TU PEDIDO</h2>
+            <h2>MI PEDIDO</h2>
             <button id="closeCart">✕</button>
         </div>
         <div id="cartItems" class="cart-items-container"></div>
         
         <div class="cart-delivery-logic">
-            <h3>MÉTODO DE ENTREGA</h3>
-            <select id="deliveryMethod" onchange="toggleDeliveryZones()">
-                <option value="pickup">Retiro en Local (Av. San Martín 1234) - $0</option>
-                <option value="delivery">Envío a Domicilio</option>
-            </select>
+            <h3>¿CÓMO LO RECIBES?</h3>
+            <div class="delivery-toggle-group">
+                <button class="toggle-btn active" id="btnPickup" onclick="setDeliveryMethod('pickup')">RETIRO</button>
+                <button class="toggle-btn" id="btnDelivery" onclick="setDeliveryMethod('delivery')">ENVÍO</button>
+            </div>
             
-            <div id="zoneSelectorContainer" style="display:none; margin-top:10px;">
-                <label>Selecciona tu zona:</label>
+            <div id="zoneContainer" class="hidden">
+                <label>ZONA DE ENVÍO:</label>
                 <select id="deliveryZone" onchange="updateUI()">
                     <option value="1500">Ciudad ($1.500)</option>
                     <option value="1200">Godoy Cruz ($1.200)</option>
@@ -87,24 +100,31 @@
         </div>
 
         <div class="cart-footer">
-            <div class="total-row">
-                <span>ENVÍO:</span>
-                <span id="shippingCost">$0</span>
-            </div>
-            <div class="total-row main-total">
-                <span>TOTAL FINAL:</span>
-                <span id="cartTotal">$0</span>
-            </div>
-            <button class="btn-whatsapp" id="btn-order" onclick="sendWhatsAppOrder()">ENVIAR PEDIDO A WHATSAPP</button>
+            <div class="total-row"><span>SUBTOTAL:</span><span id="subtotalVal">$0</span></div>
+            <div class="total-row"><span>ENVÍO:</span><span id="shippingVal">$0</span></div>
+            <div class="total-row main-total"><span>TOTAL:</span><span id="totalVal">$0</span></div>
+            <button class="btn-whatsapp" id="btn-order" onclick="sendWhatsAppOrder()">ENVIAR A COCINA 🔥</button>
         </div>
     </div>
 
     <div id="productModal" class="modal">
         <div class="modal-content">
             <div id="modalBody"></div>
+            <div class="modal-price-tag">Subtotal Item: <span id="modalCurrentPrice">$0</span></div>
             <div class="modal-footer">
                 <button class="confirm-btn" id="confirmAdd">AGREGAR AL PEDIDO</button>
                 <button class="cancel-btn" onclick="closeModal()">CANCELAR</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="ageModal" class="modal">
+        <div class="modal-content text-center">
+            <h2 style="font-size: 3rem;">🔞 +18</h2>
+            <p>Este producto contiene alcohol. ¿Confirmas que eres mayor de edad?</p>
+            <div class="modal-footer" style="flex-direction: column;">
+                <button class="confirm-btn" id="ageConfirmBtn">SOY MAYOR DE EDAD</button>
+                <button class="cancel-btn" onclick="closeAgeModal()">NO, SOY MENOR</button>
             </div>
         </div>
     </div>
