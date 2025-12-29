@@ -1,4 +1,3 @@
-/* 1. VARIABLES Y RESET */
 :root {
     --primary-fire: #FF4500;
     --primary-gradient: linear-gradient(135deg, #FF4500 0%, #E62E00 100%);
@@ -6,11 +5,11 @@
     --bg-card: #121212;
     --text-white: #FFFFFF;
     --text-gray: #B0B0B0;
-    --fire-glow: 0 0 20px rgba(255, 69, 0, 0.4);
-    --min-touch: 48px; /* Tamaño mínimo para botones táctiles */
+    --fire-glow: 0 0 20px rgba(255, 69, 0, 0.5);
+    --min-tap: 48px;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html { scroll-behavior: smooth; }
 body {
     font-family: 'Poppins', sans-serif;
@@ -19,120 +18,99 @@ body {
     overflow-x: hidden;
 }
 
-/* 2. LAYOUT MOBILE-FIRST (1 Columna) */
-.container { padding: 1.5rem; max-width: 1200px; margin: 0 auto; }
-
+/* NAVBAR */
 .navbar {
     position: fixed; top: 0; width: 100%; z-index: 1000;
     background: rgba(0,0,0,0.95); backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(255,69,0,0.3);
-    padding: 0.8rem 0;
+    padding: 0.8rem 1rem;
 }
-
-.nav-container { display: flex; justify-content: space-between; align-items: center; padding: 0 1.5rem; }
-
-.logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; text-decoration: none; color: white; letter-spacing: 2px; }
+.nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+.logo { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: white; text-decoration: none; letter-spacing: 2px; }
 .logo span { color: var(--primary-fire); }
 
-.nav-actions { display: flex; align-items: center; gap: 1rem; }
-
-/* 3. BOTONES OPTIMIZADOS (TÁCTILES) */
-.cart-btn, .add-btn, .filter-btn, .confirm-btn {
-    min-height: var(--min-touch);
-    cursor: pointer;
-    font-weight: 700;
-    border-radius: 6px;
-    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* BOTONES TÁCTILES */
+.cart-btn, .add-btn, .filter-btn, .btn-confirm {
+    min-height: var(--min-tap);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: 0.3s;
 }
 
-.cart-btn { background: none; border: 1px solid var(--primary-fire); color: white; padding: 0 1rem; position: relative; }
-
-/* 4. HERO SECTION */
+/* HERO SECTION */
 .hero {
-    height: 70vh;
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), 
-                url('https://images.unsplash.com/photo-1550547660-d9450f859349?w=1200');
-    background-size: cover; background-position: center;
+    height: 80vh; position: relative;
+    background: url('https://images.unsplash.com/photo-1550547660-d9450f859349?w=1200') center/cover;
     display: flex; align-items: center; justify-content: center; text-align: center;
 }
-
-.hero-title { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; line-height: 1; margin-bottom: 1rem; }
+.hero-overlay { position: absolute; inset: 0; background: linear-gradient(0deg, #0A0A0A 0%, rgba(0,0,0,0.4) 100%); }
+.hero-content { position: relative; z-index: 2; padding: 20px; }
+.hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.5rem, 12vw, 7rem); line-height: 0.9; }
 .hero-title span { color: var(--primary-fire); text-shadow: var(--fire-glow); }
 
-/* 5. MENU GRID (Mobile: 1 Col) */
-.menu-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    margin-top: 2rem;
+.status-banner {
+    margin: 20px 0; padding: 10px 20px; border-radius: 50px;
+    background: rgba(255,69,0,0.2); border: 1px solid var(--primary-fire);
+    display: inline-block; font-weight: 600; text-transform: uppercase;
 }
+
+/* FILTROS */
+.filter-nav {
+    position: sticky; top: 65px; z-index: 900;
+    background: var(--bg-black); padding: 15px 0; border-bottom: 1px solid #222;
+}
+.filter-container {
+    display: flex; gap: 10px; overflow-x: auto; padding: 0 15px;
+    scrollbar-width: none;
+}
+.filter-btn {
+    white-space: nowrap; padding: 0 20px; background: #1a1a1a;
+    border: 1px solid #333; color: var(--text-gray); border-radius: 5px;
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem;
+}
+.filter-btn.active { background: var(--primary-fire); color: white; border-color: var(--primary-fire); }
+
+/* GRID & ITEMS */
+.container { padding: 2rem 15px; max-width: 1200px; margin: 0 auto; }
+.category-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--primary-fire); margin: 2rem 0 1rem; }
+.menu-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
 
 .menu-item {
-    background: var(--bg-card); border-radius: 12px; overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.05);
+    background: var(--bg-card); border-radius: 15px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.05); transition: 0.3s;
 }
+.menu-item img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+.item-info { padding: 1.5rem; }
+.item-info h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 1px; }
+.item-info p { color: var(--text-gray); font-size: 0.9rem; margin: 10px 0; height: 40px; }
+.price { display: block; font-size: 1.5rem; font-weight: 800; color: var(--primary-fire); margin-bottom: 15px; }
 
-.menu-item img {
-    width: 100%; aspect-ratio: 16/9; object-fit: cover;
+.add-btn { width: 100%; background: transparent; border: 1px solid var(--primary-fire); color: white; font-weight: 800; }
+
+/* PANEL CARRITO (Lógica Mobile-First) */
+.cart-panel {
+    position: fixed; top: 0; right: -100%; width: 100%; height: 100%;
+    background: #000; z-index: 2000; transition: 0.4s ease;
+    display: flex; flex-direction: column;
 }
+.cart-panel.active { right: 0; }
+.cart-header { padding: 20px; border-bottom: 1px solid #222; display: flex; justify-content: space-between; }
+.cart-items-container { flex: 1; overflow-y: auto; padding: 20px; }
+.cart-footer { padding: 20px; background: #111; border-top: 1px solid var(--primary-fire); }
+.total-row { display: flex; justify-content: space-between; font-size: 1.5rem; font-weight: 800; margin-bottom: 15px; }
+.btn-whatsapp { width: 100%; background: #25D366; color: white; border: none; padding: 15px; font-weight: 800; border-radius: 8px; }
 
-.item-info { padding: 1.2rem; }
-.item-info h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; margin-bottom: 0.5rem; color: var(--primary-fire); }
-.item-info p { font-size: 0.9rem; color: var(--text-gray); margin-bottom: 1rem; }
-
-.price { display: block; font-size: 1.4rem; font-weight: 800; margin-bottom: 1rem; }
-
-.add-btn { width: 100%; background: transparent; border: 1px solid var(--primary-fire); color: white; }
-.add-btn:active { background: var(--primary-fire); transform: scale(0.98); }
-
-/* 6. CARRITO (Mobile: Full Screen) */
-.cart-dropdown {
-    position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
-    background: #000; z-index: 2000; padding: 1.5rem;
-    transition: 0.4s ease; overflow-y: auto;
+/* MODAL */
+.modal {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+    display: none; align-items: center; justify-content: center; z-index: 3000;
 }
-.cart-dropdown.active { right: 0; }
+.modal-content { background: #151515; width: 90%; max-width: 500px; padding: 2rem; border: 1px solid var(--primary-fire); border-radius: 12px; }
 
-.cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; border-bottom: 1px solid #222; padding-bottom: 1rem; }
-.close-cart { background: none; border: none; color: white; font-size: 1.5rem; }
-
-.cart-item { display: flex; justify-content: space-between; margin-bottom: 1rem; padding: 1rem; background: #111; border-radius: 8px; }
-
-/* 7. MODAL VIP */
-.modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 3000;
-}
-.modal-content { background: #151515; width: 90%; max-width: 450px; padding: 2rem; border-radius: 12px; border: 1px solid var(--primary-fire); position: relative; }
-.close-modal { position: absolute; top: 1rem; right: 1rem; font-size: 1.5rem; color: var(--text-gray); }
-
-.opt-group { margin: 1.5rem 0; }
-.opt-group label { display: block; margin-bottom: 0.8rem; font-weight: 600; font-size: 0.9rem; }
-select { width: 100%; padding: 1rem; background: #222; border: 1px solid #333; color: white; border-radius: 8px; font-size: 1rem; }
-
-.confirm-btn { width: 100%; background: var(--primary-gradient); border: none; color: white; box-shadow: var(--fire-glow); }
-
-/* 8. WHATSAPP FLOAT */
-.whatsapp-float {
-    position: fixed; bottom: 20px; right: 20px;
-    width: 60px; height: 60px; background: #25d366;
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4); z-index: 1000;
-}
-.whatsapp-float img { width: 35px; }
-
-/* 9. DESKTOP ADAPTATION (min-width: 768px) */
+/* RESPONSIVE DESKTOP */
 @media (min-width: 768px) {
     .menu-grid { grid-template-columns: repeat(2, 1fr); }
-    .hero-title { font-size: 6rem; }
-    .cart-dropdown { width: 400px; height: auto; top: 70px; right: -450px; border-radius: 0 0 0 15px; border-left: 1px solid var(--primary-fire); border-bottom: 1px solid var(--primary-fire); }
-    .cart-dropdown.active { right: 0; }
-    .close-cart { display: none; }
+    .cart-panel { width: 400px; }
 }
-
 @media (min-width: 1024px) {
     .menu-grid { grid-template-columns: repeat(3, 1fr); }
 }
-
-.badge-alcohol { background: #ff0000; font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; font-weight: 800; margin-bottom: 5px; display: inline-block; }
-.status-badge { background: rgba(255,69,0,0.2); padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; display: inline-block; }

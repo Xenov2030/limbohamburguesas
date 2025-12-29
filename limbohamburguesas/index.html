@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Limbo Burgers | Mobile-First VIP</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Limbo Burgers v10 | Elite Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,127 +12,141 @@
         <div class="nav-container">
             <a href="#" class="logo">LIMBO<span>BURGERS</span></a>
             <div class="nav-actions">
-                <button class="cart-btn" id="cartToggle" aria-label="Ver carrito">
+                <button class="cart-btn" id="cartToggle">
                     <span class="cart-icon">🛒</span>
                     <span id="cartCount">0</span>
                 </button>
-                <div class="burger-menu" id="burger">
+                <div class="burger" id="burgerMenu">
                     <span></span><span></span><span></span>
                 </div>
             </div>
         </div>
         
-        <div class="cart-dropdown" id="cartDropdown">
+        <div class="cart-panel" id="cartPanel">
             <div class="cart-header">
-                <h3>TU PEDIDO</h3>
-                <button class="close-cart" id="closeCart">✕</button>
+                <h2>TU PEDIDO</h2>
+                <button id="closeCart">✕</button>
             </div>
-            <div id="cartItems"></div>
+            <div id="cartItems" class="cart-items-container"></div>
             <div class="cart-footer">
-                <div class="total">Total: <span id="cartTotal">$0</span></div>
-                <button id="sendOrder" class="btn-primary" onclick="sendWhatsAppOrder()">PEDIR POR WHATSAPP</button>
+                <div class="total-row">
+                    <span>TOTAL:</span>
+                    <span id="cartTotal">$0</span>
+                </div>
+                <button id="sendOrder" class="btn-whatsapp" onclick="sendWhatsAppOrder()">ENVIAR A WHATSAPP</button>
             </div>
         </div>
     </header>
 
     <section class="hero">
+        <div class="hero-overlay"></div>
         <div class="hero-content">
-            <h1 class="hero-title">EL SABOR DEL <span>INFIERNO</span></h1>
-            <p id="status-business" class="status-badge">Cargando estado...</p>
-            <a href="#menu" class="cta-btn">VER EL MENÚ</a>
+            <h1 class="hero-title">BIENVENIDO AL <span>LIMBO</span></h1>
+            <div id="status-banner" class="status-banner">Verificando cocina...</div>
+            <a href="#menu" class="cta-scroll">EXPLORAR CARTA</a>
         </div>
     </section>
 
-    <main class="container" id="menu">
-        <div class="filter-bar">
-            <button class="filter-btn active" data-filter="all">TODO</button>
-            <button class="filter-btn" data-filter="burgers">BURGERS</button>
-            <button class="filter-btn" data-filter="sides">ACOMPAÑAMIENTO</button>
+    <nav class="filter-nav">
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">TODAS</button>
+            <button class="filter-btn" data-filter="burgers">HAMBURGUESAS</button>
+            <button class="filter-btn" data-filter="sides">SIDES</button>
             <button class="filter-btn" data-filter="drinks">BEBIDAS</button>
         </div>
+    </nav>
 
-        <div class="menu-grid">
-            <div class="menu-item" data-category="burgers">
-                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600" alt="Clásica">
-                <div class="item-info">
-                    <h3>CLÁSICA</h3>
-                    <p>Medallón 180g, cheddar, lechuga y tomate.</p>
-                    <span class="price">$7.500</span>
-                    <button class="add-btn" onclick="openModal('Clásica', 7500, 'burgers')">AGREGAR</button>
+    <main class="container" id="menu">
+        <div class="category-section" data-category="burgers">
+            <h2 class="category-title">HAMBURGUESAS ELITE</h2>
+            <div class="menu-grid">
+                <div class="menu-item" data-type="burgers">
+                    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80" alt="Inferno Double">
+                    <div class="item-info">
+                        <h3>INFERNO DOUBLE</h3>
+                        <p>Doble medallón 180g, cheddar x4, bacon y salsa Hell.</p>
+                        <span class="price">$9.500</span>
+                        <button class="add-btn" onclick="openModal('Inferno Double', 9500, 'burger')">AGREGAR</button>
+                    </div>
                 </div>
-            </div>
+                <div class="menu-item" data-type="burgers">
+                    <img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=600&q=80" alt="Glory Beef">
+                    <div class="item-info">
+                        <h3>GLORY BEEF</h3>
+                        <p>Medallón premium, aros de cebolla y BBQ ahumada.</p>
+                        <span class="price">$8.800</span>
+                        <button class="add-btn" onclick="openModal('Glory Beef', 8800, 'burger')">AGREGAR</button>
+                    </div>
+                </div>
+                <div class="menu-item" data-type="burgers">
+                    <img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=600&q=80" alt="Purgatory">
+                    <div class="item-info">
+                        <h3>PURGATORY</h3>
+                        <p>Triple carne, huevo frito, jamón y muzzarella.</p>
+                        <span class="price">$10.200</span>
+                        <button class="add-btn" onclick="openModal('Purgatory', 10200, 'burger')">AGREGAR</button>
+                    </div>
+                </div>
+                <div class="menu-item" data-type="burgers">
+                    <img src="https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=600&q=80" alt="Glory Chicken">
+                    <div class="item-info">
+                        <h3>GLORY CHICKEN</h3>
+                        <p>Pollo crispy, alioli de lima y lechuga morada.</p>
+                        <span class="price">$8.200</span>
+                        <button class="add-btn" onclick="openModal('Glory Chicken', 8200, 'burger')">AGREGAR</button>
+                    </div>
+                </div>
+                <div class="menu-item" data-type="burgers">
+                    <img src="https://images.unsplash.com/photo-1614398751058-eb2e0bf63e53?w=600&q=80" alt="Spicy Angel">
+                    <div class="item-info">
+                        <h3>SPICY ANGEL</h3>
+                        <p>Pollo frito, jalapeños y mayonesa de sriracha.</p>
+                        <span class="price">$8.500</span>
+                        <button class="add-btn" onclick="openModal('Spicy Angel', 8500, 'burger')">AGREGAR</button>
+                    </div>
+                </div>
+                <div class="menu-item" data-type="burgers">
+                    <img src="https://images.unsplash.com/photo-1520072959219-c595dc870360?w=600&q=80" alt="Garden of Eden">
+                    <div class="item-info">
+                        <h3>GARDEN OF EDEN</h3>
+                        <p>Medallón de lentejas, palta y cebolla caramelizada.</p>
+                        <span class="price">$7.900</span>
+                        <button class="add-btn" onclick="openModal('Garden of Eden', 7900, 'burger')">AGREGAR</button>
+                    </div>
+                </div>
+                </div>
+        </div>
 
-            <div class="menu-item" data-category="burgers">
-                <img src="https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=600" alt="Angel Burger">
-                <div class="item-info">
-                    <h3>ANGEL BURGER</h3>
-                    <p>Pollo crispy, alioli de hierbas y lechuga morada.</p>
-                    <span class="price">$7.200</span>
-                    <button class="add-btn" onclick="openModal('Angel Burger', 7200, 'burgers')">AGREGAR</button>
+        <div class="category-section" data-category="sides">
+            <h2 class="category-title">SIDES & SNACKS</h2>
+            <div class="menu-grid">
+                <div class="menu-item" data-type="sides">
+                    <img src="https://images.unsplash.com/photo-1573014133633-560dd432ee64?w=600&q=80" alt="Cheddar Bacon">
+                    <div class="item-info">
+                        <h3>PAPAS CHEDDAR & BACON</h3>
+                        <span class="price">$4.500</span>
+                        <button class="add-btn" onclick="openModal('Papas Cheddar Bacon', 4500, 'side')">AGREGAR</button>
+                    </div>
                 </div>
-            </div>
+                </div>
+        </div>
 
-            <div class="menu-item" data-category="burgers">
-                <img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=600" alt="Double Hell">
-                <div class="item-info">
-                    <h3>DOUBLE HELL</h3>
-                    <p>4 medallones premium, cheddar extra y bacon.</p>
-                    <span class="price">$12.500</span>
-                    <button class="add-btn" onclick="openModal('Double Hell', 12500, 'burgers')">AGREGAR</button>
+        <div class="category-section" data-category="drinks">
+            <h2 class="category-title">BEBIDAS & COCKTAILS</h2>
+            <div class="menu-grid" id="drinksGrid">
                 </div>
-            </div>
-
-            <div class="menu-item" data-category="sides">
-                <img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=600" alt="Nuggets">
-                <div class="item-info">
-                    <h3>NUGGETS DE POLLO</h3>
-                    <p>X10 unidades con salsa barbacoa.</p>
-                    <span class="price">$4.200</span>
-                    <button class="add-btn" onclick="openModal('Nuggets', 4200, 'sides')">AGREGAR</button>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="sides">
-                <img src="https://images.unsplash.com/photo-1531749956467-241242ac08fd?w=600" alt="Mozzarella">
-                <div class="item-info">
-                    <h3>BASTONES MOZZA</h3>
-                    <p>Crujientes por fuera, fundidos por dentro.</p>
-                    <span class="price">$4.500</span>
-                    <button class="add-btn" onclick="openModal('Bastones Mozzarella', 4500, 'sides')">AGREGAR</button>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="drinks">
-                <img src="https://images.unsplash.com/photo-1544145945-f904253db0ad?w=600" alt="Gin Tonic">
-                <div class="item-info">
-                    <span class="badge-alcohol">ALCOHOL</span>
-                    <h3>GIN TONIC PREMIUM</h3>
-                    <p>Gin artesanal, tónica y rodaja de pepino.</p>
-                    <span class="price">$5.200</span>
-                    <button class="add-btn" onclick="openModal('Gin Tonic', 5200, 'alcohol')">AGREGAR</button>
-                </div>
-            </div>
         </div>
     </main>
 
-    <div id="modal" class="modal-overlay">
+    <div id="productModal" class="modal">
         <div class="modal-content">
-            <span class="close-modal" id="closeModal">×</span>
-            <div id="modal-body"></div>
+            <div id="modalBody"></div>
             <div class="modal-footer">
-                <button class="confirm-btn" id="addToCartConfirm">CONFIRMAR AGREGAR</button>
+                <button class="btn-confirm" id="confirmAdd">CONFIRMAR</button>
+                <button class="btn-cancel" onclick="closeModal()">CANCELAR</button>
             </div>
         </div>
     </div>
-
-    <a href="#" onclick="sendWhatsAppOrder()" class="whatsapp-float" aria-label="Enviar pedido">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA">
-    </a>
-
-    <footer>
-        <p>LIMBO BURGERS &copy; 2025</p>
-        <p>Luján de Cuyo, Mendoza.</p>
-    </footer>
 
     <script src="script.js"></script>
 </body>
