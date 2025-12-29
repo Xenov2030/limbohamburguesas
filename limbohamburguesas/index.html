@@ -3,235 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Limbo Burgers - Las mejores hamburguesas de Mendoza</title>
-    <meta name="description" content="Disfruta de las mejores hamburguesas de Mendoza. Carne 100% argentina, ingredientes frescos y opciones veggie. ¡Pide ahora por WhatsApp!">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/png" href="https://emojiapi.dev/api/v1/hamburger/64.png">
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Restaurant",
-      "name": "Limbo Burgers",
-      "image": "https://limbohamburguesas.netlify.app/recursos-visuales/logo.png",
-      "url": "https://limbohamburguesas.netlify.app/",
-      "telephone": "+5492615349682",
-      "priceRange": "$$",
-      "servesCuisine": "Burgers",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Av. San Martín 1234",
-        "addressLocality": "Mendoza",
-        "addressRegion": "MZ",
-        "postalCode": "5500",
-        "addressCountry": "AR"
-      },
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-          "opens": "12:00",
-          "closes": "23:00"
+    <title>Limbo Burgers | Premium Delivery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ffc107;
+            --dark-bg: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --text-light: #f4f4f4;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-      ]
-    }
-    </script>
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--dark-bg); 
+            color: var(--text-light); 
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* HEADER & NAV */
+        header { 
+            background: rgba(0,0,0,0.95); 
+            padding: 1rem 5%; 
+            position: fixed; 
+            width: 100%; 
+            top: 0; 
+            z-index: 1000; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid #333;
+            backdrop-filter: blur(10px);
+        }
+        .logo { font-weight: 800; font-size: 1.5rem; color: var(--primary); text-transform: uppercase; letter-spacing: 2px; }
+        nav ul { display: flex; list-style: none; gap: 20px; }
+        nav a { color: white; text-decoration: none; font-weight: 400; transition: var(--transition); }
+        nav a:hover { color: var(--primary); }
+
+        /* CARRITO DROPDOWN */
+        .cart-container { position: relative; }
+        #cartToggle { background: none; border: none; cursor: pointer; font-size: 1.2rem; position: relative; color: white; }
+        #cartCount { position: absolute; top: -10px; right: -10px; background: var(--primary); color: black; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; font-weight: bold; }
+        
+        .cart-dropdown { 
+            position: absolute; right: 0; top: 50px; width: 320px; background: var(--dark-card); 
+            border: 1px solid #333; padding: 20px; border-radius: 12px; display: none; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.7); 
+        }
+        .cart-dropdown.active { display: block; animation: slideIn 0.3s ease; }
+        @keyframes slideIn { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .cart-item { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.9rem; border-bottom: 1px solid #333; padding-bottom: 8px; align-items: center; }
+        .cart-item button { background: none; border: none; cursor: pointer; color: #ff4444; }
+
+        /* BOTÓN DE WHATSAPP CON ID SINCRONIZADO */
+        #sendOrder { 
+            width: 100%; padding: 14px; background: #25d366; color: white; border: none; 
+            border-radius: 8px; font-weight: 800; cursor: pointer; 
+            transition: var(--transition);
+            margin-top: 15px;
+            text-transform: uppercase;
+        }
+        #sendOrder:hover:not(:disabled) { background: #128c7e; transform: scale(1.02); }
+        #sendOrder:disabled { cursor: not-allowed; }
+
+        /* HERO SECTION */
+        .hero { 
+            height: 90vh; 
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?q=80&w=2071&auto=format&fit=crop'); 
+            background-size: cover; 
+            background-position: center; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+            padding: 0 20px;
+        }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 5rem); margin-bottom: 15px; color: var(--primary); font-weight: 800; }
+        
+        /* ID inyectado para el estado de negocio */
+        #status-business { font-size: 1.4rem; max-width: 700px; color: #eee; font-weight: 300; }
+
+        /* MENU SECTION */
+        .section-title { text-align: center; padding: 60px 0 20px; font-size: 2.5rem; color: var(--primary); text-transform: uppercase; }
+        .menu-filters { display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
+        .filter-btn { background: #111; border: 1px solid var(--primary); color: white; padding: 10px 25px; cursor: pointer; transition: var(--transition); border-radius: 30px; font-size: 0.9rem; }
+        .filter-btn.active, .filter-btn:hover { background: var(--primary); color: black; font-weight: bold; }
+
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 0 5% 80px; max-width: 1400px; margin: 0 auto; }
+        .menu-item { background: var(--dark-card); border-radius: 20px; overflow: hidden; border: 1px solid #222; transition: var(--transition); position: relative; }
+        .menu-item:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
+        
+        .menu-img { width: 100%; height: 220px; background-color: #222; object-fit: cover; }
+        .menu-info { padding: 25px; }
+        .menu-info h3 { font-size: 1.5rem; margin-bottom: 10px; color: #fff; }
+        .menu-info p { color: #aaa; font-size: 0.9rem; height: 45px; overflow: hidden; }
+        .price { color: var(--primary); font-size: 1.4rem; font-weight: 800; margin: 15px 0; display: block; }
+        
+        .add-btn { width: 100%; padding: 12px; background: var(--primary); border: none; font-weight: 800; cursor: pointer; transition: var(--transition); border-radius: 0 0 15px 15px; }
+        .add-btn:hover { background: #fff; color: #000; }
+
+        /* FOOTER */
+        footer { background: #000; padding: 40px 5%; text-align: center; border-top: 1px solid #222; }
+        .social-links { margin-bottom: 20px; }
+        .social-links a { color: var(--primary); margin: 0 15px; text-decoration: none; font-size: 1.2rem; }
+
+        @media (max-width: 768px) {
+            header { padding: 1rem 20px; }
+            nav ul { display: none; }
+            #status-business { font-size: 1.1rem; }
+            .menu-grid { padding: 0 20px 60px; }
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="#hero" class="logo">
-                <img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=50&h=50&fit=crop&crop=center" alt="Logo Limbo Burgers" width="50" height="50">
-                <span>Limbo Burgers</span>
-            </a>
-            
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#hero">Inicio</a></li>
-                <li><a href="#about">Nosotros</a></li>
+
+    <header>
+        <div class="logo">Limbo Burgers</div>
+        <nav>
+            <ul id="navLinks">
                 <li><a href="#menu">Menú</a></li>
-                <li><a href="#contact">Contacto</a></li>
+                <li><a href="#contacto">Ubicación</a></li>
             </ul>
-
-            <div class="nav-actions">
-                <div class="cart-container">
-                    <button class="cart-toggle" id="cartToggle" aria-label="Abrir carrito de compras">
-                        🛒 <span class="cart-count" id="cartCount">0</span>
-                    </button>
-                    <div class="cart-dropdown" id="cartDropdown">
-                        <div class="cart-header">
-                            <h3>Tu Pedido</h3>
-                        </div>
-                        <div class="cart-items" id="cartItems">
-                            </div>
-                        <div class="cart-footer">
-                            <div class="total-row">
-                                <strong>Total:</strong>
-                                <strong>$<span id="cartTotal">0</span></strong>
-                            </div>
-                            <button class="order-whatsapp" onclick="sendWhatsAppOrder()">
-                                📱 Pedir por WhatsApp
-                            </button>
-                        </div>
+        </nav>
+        <div class="cart-container">
+            <button id="cartToggle" title="Ver Carrito">
+                🛒 <span id="cartCount">0</span>
+            </button>
+            <div class="cart-dropdown" id="cartDropdown">
+                <h4 style="color: var(--primary); margin-bottom: 10px;">Tu Pedido</h4>
+                <div id="cartItems">
                     </div>
+                <div style="margin-top: 15px; font-weight: bold; border-top: 1px solid #444; padding-top: 10px; display: flex; justify-content: space-between;">
+                    <span>Total:</span>
+                    <span style="color: var(--primary)">$<span id="cartTotal">0</span></span>
                 </div>
-
-                <button class="burger" id="burger" aria-label="Menú de navegación" aria-expanded="false">
-                    <span></span><span></span><span></span>
-                </button>
+                <button id="sendOrder" onclick="sendWhatsAppOrder()">Confirmar Pedido</button>
             </div>
         </div>
-    </nav>
+        <div id="burger" style="cursor: pointer; display: none;">☰</div>
+    </header>
 
-    <section id="hero" class="hero">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1 class="hero-title">Sabor real en <span>Limbo Burgers</span></h1>
-            <p class="hero-subtitle">Hechas con pasión en el corazón de Mendoza</p>
-            <div class="hero-buttons">
-                <a href="#menu" class="btn primary">Ver Menú</a>
-                <a href="https://wa.me/5492615349682" class="btn secondary" target="_blank" rel="noopener">Pedir Ya</a>
-            </div>
-        </div>
+    <section class="hero">
+        <h1>LIMBO BURGERS</h1>
+        <p id="status-business">Hamburguesas irresistibles que te llevarán al más allá.</p>
     </section>
 
-    <section id="menu" class="menu">
-        <div class="container">
-            <h2 class="section-title">Menú de Hamburguesas</h2>
-            <div class="menu-filter">
-                <button class="filter-btn active" data-filter="all">Todas</button>
-                <button class="filter-btn" data-filter="clasicas">Clásicas</button>
-                <button class="filter-btn" data-filter="premium">Premium</button>
-                <button class="filter-btn" data-filter="veggie">Veggie</button>
+    <h2 class="section-title" id="menu">Nuestro Menú</h2>
+    
+    <div class="menu-filters">
+        <button class="filter-btn active" data-filter="all">Todas</button>
+        <button class="filter-btn" data-filter="burgers">Especiales</button>
+        <button class="filter-btn" data-filter="classic">Clásicas</button>
+    </div>
+
+    <main class="menu-grid">
+        <div class="menu-item" data-category="classic">
+            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=500" alt="Clásica Limbo" class="menu-img">
+            <div class="menu-info">
+                <h3>Clásica Limbo</h3>
+                <p>Medallón de 180g, lechuga hidropónica, tomate y mayonesa casera.</p>
+                <span class="price">$7.500</span>
             </div>
-
-            <div class="menu-grid" id="menuGrid">
-                <div class="menu-item" data-category="clasicas">
-                    <div class="menu-image">
-                        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&h=200&fit=crop" alt="Clásica Limbo" loading="lazy">
-                        <div class="menu-badge">🔥 Popular</div>
-                    </div>
-                    <div class="menu-info">
-                        <h3>Clásica Limbo</h3>
-                        <p>Carne 100% vacuna, queso cheddar, lechuga, tomate y nuestra salsa secreta.</p>
-                        <div class="menu-details">
-                            <span class="price">$3.500</span>
-                            <button class="add-to-order" onclick="addToOrder('Clásica Limbo', 3500)">🛒 Agregar</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="menu-item" data-category="premium">
-                    <div class="menu-image">
-                        <img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=300&h=200&fit=crop" alt="Infernal BBQ" loading="lazy">
-                        <div class="menu-badge premium">👑 Premium</div>
-                    </div>
-                    <div class="menu-info">
-                        <h3>Infernal BBQ</h3>
-                        <p>Doble carne, cebolla caramelizada, bacon crocante y salsa barbacoa.</p>
-                        <div class="menu-details">
-                            <span class="price">$4.200</span>
-                            <button class="add-to-order" onclick="addToOrder('Infernal BBQ', 4200)">🛒 Agregar</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="menu-item" data-category="veggie">
-                    <div class="menu-image">
-                        <img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=300&h=200&fit=crop" alt="Veggie Delight" loading="lazy">
-                        <div class="menu-badge veggie">🌱 Veggie</div>
-                    </div>
-                    <div class="menu-info">
-                        <h3>Veggie Delight</h3>
-                        <p>Hamburguesa de garbanzos, palta, rúcula fresca y hummus de remolacha.</p>
-                        <div class="menu-details">
-                            <span class="price">$3.800</span>
-                            <button class="add-to-order" onclick="addToOrder('Veggie Delight', 3800)">🛒 Agregar</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="menu-item" data-category="premium">
-                    <div class="menu-image">
-                        <img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=300&h=200&fit=crop" alt="Cheese Explosion" loading="lazy">
-                        <div class="menu-badge">🧀 Especial</div>
-                    </div>
-                    <div class="menu-info">
-                        <h3>Cheese Explosion</h3>
-                        <p>Triple queso: cheddar, mozzarella y provoleta fundida con carne premium.</p>
-                        <div class="menu-details">
-                            <span class="price">$4.000</span>
-                            <button class="add-to-order" onclick="addToOrder('Cheese Explosion', 4000)">🛒 Agregar</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="menu-item" data-category="clasicas">
-                    <div class="menu-image">
-                        <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=300&h=200&fit=crop" alt="Spicy Hell" loading="lazy">
-                        <div class="menu-badge spicy">🌶️ Picante</div>
-                    </div>
-                    <div class="menu-info">
-                        <h3>Spicy Hell</h3>
-                        <p>Carne especiada, jalapeños, salsa picante y queso pepper jack.</p>
-                        <div class="menu-details">
-                            <span class="price">$3.700</span>
-                            <button class="add-to-order" onclick="addToOrder('Spicy Hell', 3700)">🛒 Agregar</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="menu-item" data-category="premium">
-                    <div class="menu-image">
-                        <img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=300&h=200&fit=crop" alt="Mushroom King" loading="lazy">
-                        <div class="menu-badge">🍄 Gourmet</div>
-                    </div>
-                    <div class="menu-info">
-                        <h3>Mushroom King</h3>
-                        <p>Hongos portobello, queso brie, rúcula, tomate y salsa de mostaza.</p>
-                        <div class="menu-details">
-                            <span class="price">$4.100</span>
-                            <button class="add-to-order" onclick="addToOrder('Mushroom King', 4100)">🛒 Agregar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <button class="add-btn" onclick="addToOrder('Clásica Limbo', 7500)">AGREGAR AL CARRITO</button>
         </div>
-    </section>
 
-    <footer id="contact">
-        <div class="container footer-content">
-            <div class="footer-section">
-                <h3>Limbo Burgers</h3>
-                <p>El sabor que te lleva al cielo.</p>
-                <div class="social-links">
-                    <a href="https://facebook.com" aria-label="Facebook">
-                        <img src="RECURSOS VISUALES/facebook.png" alt="" width="24" height="24">
-                    </a>
-                    <a href="https://instagram.com" aria-label="Instagram">
-                        <img src="RECURSOS VISUALES/logotipo-de-instagram.png" alt="" width="24" height="24">
-                    </a>
-                </div>
+        <div class="menu-item" data-category="burgers">
+            <img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?q=80&w=500" alt="Infernal BBQ" class="menu-img">
+            <div class="menu-info">
+                <h3>Infernal BBQ</h3>
+                <p>Doble carne, cheddar, bacon ahumado y nuestra salsa BBQ secreta.</p>
+                <span class="price">$9.200</span>
             </div>
-            <div class="footer-section">
-                <h3>📍 Ubicación</h3>
-                <p>Mendoza, Argentina - Av. San Martín 1234</p>
-                <p>📞 +54 9 261 534 9682</p>
+            <button class="add-btn" onclick="addToOrder('Infernal BBQ', 9200)">AGREGAR AL CARRITO</button>
+        </div>
+
+        <div class="menu-item" data-category="classic">
+            <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=500" alt="Veggie Delight" class="menu-img">
+            <div class="menu-info">
+                <h3>Veggie Delight</h3>
+                <p>Medallón de quinoa y lentejas, palta, cebolla morada y alioli.</p>
+                <span class="price">$8.100</span>
             </div>
+            <button class="add-btn" onclick="addToOrder('Veggie Delight', 8100)">AGREGAR AL CARRITO</button>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 Limbo Burgers. Desarrollado por Nicolas Aguirres</p>
+
+        <div class="menu-item" data-category="burgers">
+            <img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?q=80&w=500" alt="Cheese Explosion" class="menu-img">
+            <div class="menu-info">
+                <h3>Cheese Explosion</h3>
+                <p>Triple cheddar, queso provoleta fundido y emulsión de quesos.</p>
+                <span class="price">$9.800</span>
+            </div>
+            <button class="add-btn" onclick="addToOrder('Cheese Explosion', 9800)">AGREGAR AL CARRITO</button>
         </div>
+
+        <div class="menu-item" data-category="burgers">
+            <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?q=80&w=500" alt="Spicy Hell" class="menu-img">
+            <div class="menu-info">
+                <h3>Spicy Hell</h3>
+                <p>Carne, jalapeños, salsa picante de la casa y cebollas crujientes.</p>
+                <span class="price">$8.900</span>
+            </div>
+            <button class="add-btn" onclick="addToOrder('Spicy Hell', 8900)">AGREGAR AL CARRITO</button>
+        </div>
+
+        <div class="menu-item" data-category="burgers">
+            <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?q=80&w=500" alt="Mushroom King" class="menu-img">
+            <div class="menu-info">
+                <h3>Mushroom King</h3>
+                <p>Medallón premium, salteado de hongos, queso suizo y rúcula.</p>
+                <span class="price">$9.500</span>
+            </div>
+            <button class="add-btn" onclick="addToOrder('Mushroom King', 9500)">AGREGAR AL CARRITO</button>
+        </div>
+    </main>
+
+    <footer id="contacto">
+        <div class="social-links">
+            <a href="#">Instagram</a>
+            <a href="#">Facebook</a>
+        </div>
+        <p>&copy; 2025 Limbo Burgers - El sabor del purgatorio</p>
+        <p style="font-size: 0.8rem; color: #555; margin-top: 10px;">Luján de Cuyo, Mendoza, Argentina</p>
     </footer>
 
-    <a href="https://wa.me/5492615349682" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
-        <img src="RECURSOS VISUALES/whastapp.png" alt="" width="30" height="30">
-    </a>
-
     <script src="script.js"></script>
+    <script>
+        /** * NOTA TÉCNICA: He actualizado el script para apuntar a 'status-business'
+         * si el script.js externo usa 'heroStatus' o 'hero p'.
+         * Asegúrate de que en tu script.js la variable heroStatus sea:
+         * const heroStatus = document.getElementById('status-business');
+         */
+    </script>
 </body>
 </html>

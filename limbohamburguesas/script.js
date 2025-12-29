@@ -1,5 +1,5 @@
 /**
- * LIMBO BURGERS - JS Final (Versión 4.0 con Persistencia)
+ * LIMBO BURGERS - JS Final (Versión 5.0 + Horario Comercial Dinámico)
  */
 
 // --- ELEMENTOS ---
@@ -7,6 +7,40 @@ const burger = document.getElementById('burger');
 const navLinks = document.getElementById('navLinks');
 const cartToggle = document.getElementById('cartToggle');
 const cartDropdown = document.getElementById('cartDropdown');
+const sendOrderBtn = document.getElementById('sendOrder'); // Botón de WhatsApp
+const heroStatus = document.querySelector('.hero p'); // Párrafo de descripción en Hero
+
+// --- GESTIÓN DEL PEDIDO ---
+let cart = [];
+
+// --- LÓGICA DE HORARIO COMERCIAL ---
+function checkBusinessHours() {
+    const now = new Date();
+    const currentHour = now.getHours();
+    
+    // Regla: Abre todos los días de 12:00 a 23:00
+    const isOpen = currentHour >= 12 && currentHour < 23;
+
+    if (sendOrderBtn) {
+        if (isOpen) {
+            sendOrderBtn.disabled = false;
+            sendOrderBtn.textContent = 'Pedir por WhatsApp';
+            sendOrderBtn.style.opacity = '1';
+            sendOrderBtn.style.cursor = 'pointer';
+            sendOrderBtn.style.filter = 'grayscale(0%)';
+            
+            if (heroStatus) heroStatus.innerHTML = '🔥 ¡Estamos cocinando en vivo!';
+        } else {
+            sendOrderBtn.disabled = true;
+            sendOrderBtn.textContent = 'Local Cerrado (Abre 12:00hs)';
+            sendOrderBtn.style.opacity = '0.6';
+            sendOrderBtn.style.cursor = 'not-allowed';
+            sendOrderBtn.style.filter = 'grayscale(100%)';
+            
+            if (heroStatus) heroStatus.innerHTML = '💤 Abrimos a las 12:00hs';
+        }
+    }
+}
 
 // --- LÓGICA MENÚ MÓVIL ---
 burger.addEventListener('click', () => {
@@ -15,23 +49,18 @@ burger.addEventListener('click', () => {
 
 // --- LÓGICA CARRITO (ABRIR/CERRAR) ---
 cartToggle.addEventListener('click', (e) => {
-    e.stopPropagation(); // Evita que el clic cierre el carrito inmediatamente
+    e.stopPropagation();
     cartDropdown.classList.toggle('active');
 });
 
-// Cerrar carrito al hacer clic fuera del panel
 document.addEventListener('click', (e) => {
     if (!cartDropdown.contains(e.target) && e.target !== cartToggle) {
         cartDropdown.classList.remove('active');
     }
 });
 
-// --- GESTIÓN DEL PEDIDO ---
-let cart = [];
-
 /**
  * Inicializa el carrito buscando datos en localStorage.
- * Se ejecuta al cargar la página.
  */
 function initCart() {
     const savedCart = localStorage.getItem('limbo_cart');
@@ -44,6 +73,10 @@ function initCart() {
             cart = [];
         }
     }
+    // Verificamos el horario apenas carga la página
+    checkBusinessHours();
+    // Opcional: Re-verificar cada minuto por si el usuario deja la página abierta
+    setInterval(checkBusinessHours, 60000);
 }
 
 function addToOrder(name, price) {
@@ -56,8 +89,6 @@ function addToOrder(name, price) {
     }
     
     updateCart();
-    
-    // Feedback visual: abrir carrito al agregar producto
     cartDropdown.classList.add('active');
 }
 
@@ -65,6 +96,8 @@ function updateCart() {
     const cartItems = document.getElementById('cartItems');
     const cartCount = document.getElementById('cartCount');
     const cartTotal = document.getElementById('cartTotal');
+
+    if (!cartItems || !cartCount || !cartTotal) return;
 
     cartItems.innerHTML = '';
     let total = 0;
@@ -90,7 +123,6 @@ function updateCart() {
     cartCount.textContent = count;
     cartTotal.textContent = total.toLocaleString('es-AR');
 
-    // PERSISTENCIA: Guardar estado actual en localStorage
     localStorage.setItem('limbo_cart', JSON.stringify(cart));
 }
 
@@ -101,7 +133,13 @@ function removeItem(name) {
 
 // --- WHATSAPP ---
 function sendWhatsAppOrder() {
+    // Doble validación: Carrito vacío o local cerrado
+    const now = new Date();
+    const currentHour = now.getHours();
+    const isOpen = currentHour >= 12 && currentHour < 23;
+
     if (cart.length === 0) return alert("Tu carrito está vacío.");
+    if (!isOpen) return alert("Lo sentimos, el local se encuentra cerrado en este momento.");
 
     let message = "🍔 *Nuevo Pedido - Limbo Burgers*\n\n";
     cart.forEach(item => {
@@ -136,5 +174,4 @@ filterButtons.forEach(btn => {
 });
 
 // --- EJECUCIÓN INICIAL ---
-// Llamamos a initCart cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', initCart);
