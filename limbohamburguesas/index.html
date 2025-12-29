@@ -3,139 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Limbo Burgers | Nivel Definitivo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <title>Limbo Burgers | Sabor del Infierno</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header class="navbar">
         <div class="nav-container">
-            <div class="nav-left">
-                <a href="#" class="logo">
-                    <span>LIMBO</span> BURGERS
-                </a>
-            </div>
-            <nav class="nav-links" id="navLinks">
-                <li><a href="#menu">Menú</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </nav>
-            <div class="header-actions">
-                <button class="cart-toggle" id="cartToggle">
-                    🛒 <span id="cartCount">0</span>
+            <a href="#" class="logo">LIMBO<span>BURGERS</span></a>
+            <div class="nav-actions">
+                <button class="cart-btn" id="cartToggle">
+                    <span class="cart-icon">🛒</span>
+                    <span id="cartCount">0</span>
                 </button>
-                <div class="burger" id="burger">
+                <div class="burger-menu" id="burger">
                     <span></span><span></span><span></span>
                 </div>
             </div>
         </div>
+        
         <div class="cart-dropdown" id="cartDropdown">
             <h3>Tu Pedido</h3>
             <div id="cartItems"></div>
-            <div class="cart-total">
-                Total: $<span id="cartTotal">0</span>
+            <div class="cart-footer">
+                <div class="total">Total: <span id="cartTotal">$0</span></div>
+                <button id="sendOrder" onclick="sendWhatsAppOrder()">PEDIR POR WHATSAPP</button>
             </div>
-            <button id="sendOrder" onclick="sendWhatsAppOrder()">Pedir por WhatsApp</button>
         </div>
     </header>
 
     <section class="hero">
-        <div class="hero-overlay"></div>
         <div class="hero-content">
-            <h1 class="hero-title">El Sabor del <span>Infierno</span></h1>
-            <p id="status-business">🔥 ¡Estamos cocinando en vivo!</p>
-            <a href="#menu" class="cta-button">Ver Menú</a>
+            <h1 class="hero-title">EL SABOR DEL <span>INFIERNO</span></h1>
+            <p id="status-business">🔥 ¡PARRILLA ENCENDIDA!</p>
+            <a href="#menu" class="cta-btn">VER EL MENÚ</a>
         </div>
     </section>
 
-    <section id="menu" class="container">
-        <h2 class="section-title">Nuestro Menú</h2>
-        <div class="menu-filters">
-            <button class="filter-btn active" data-filter="all">Todas</button>
-            <button class="filter-btn" data-filter="burgers">Hamburguesas</button>
-            <button class="filter-btn" data-filter="sides">Acompañamientos</button>
-            <button class="filter-btn" data-filter="drinks">Bebidas</button>
+    <main class="container" id="menu">
+        <div class="filter-bar">
+            <button class="filter-btn active" data-filter="all">TODO</button>
+            <button class="filter-btn" data-filter="burgers">HAMBURGUESAS</button>
+            <button class="filter-btn" data-filter="sides">ACOMPAÑAMIENTO</button> 
+            <button class="filter-btn" data-filter="drinks">BEBIDAS</button>
         </div>
 
         <div class="menu-grid">
             <div class="menu-item" data-category="burgers">
-                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=500" alt="Clásica Limbo">
-                <div class="menu-info">
-                    <h3>Clásica Limbo</h3>
-                    <p>180g de carne premium, cheddar, lechuga y tomate.</p>
+                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=500&auto=format&fit=crop" alt="Clásica">
+                <div class="item-info">
+                    <h3>CLÁSICA</h3>
+                    <p>Medallón 180g, cheddar, lechuga y tomate fresco.</p>
                     <span class="price">$7.500</span>
+                    <button class="add-btn" onclick="openModal('Clásica', 7500, 'burgers')">AGREGAR</button>
                 </div>
-                <button class="add-btn" onclick="openModal('Clásica Limbo', 7500, 'burgers')">AGREGAR</button>
+            </div>
+
+            <div class="menu-item" data-category="burgers">
+                <img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?q=80&w=500&auto=format&fit=crop" alt="Infernal BBQ">
+                <div class="item-info">
+                    <h3>INFERNAL BBQ</h3>
+                    <p>Doble carne, bacon crocante y salsa BBQ secreta.</p>
+                    <span class="price">$8.900</span>
+                    <button class="add-btn" onclick="openModal('Infernal BBQ', 8900, 'burgers')">AGREGAR</button>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="burgers">
+                <img src="https://images.unsplash.com/photo-1520072959219-c595dc870360?q=80&w=500&auto=format&fit=crop" alt="Veggie">
+                <div class="item-info">
+                    <h3>VEGGIE</h3>
+                    <p>Medallón de lentejas, palta y cebolla caramelizada.</p>
+                    <span class="price">$7.200</span>
+                    <button class="add-btn" onclick="openModal('Veggie', 7200, 'burgers')">AGREGAR</button>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="burgers">
+                <img src="https://images.unsplash.com/photo-1550317138-10000687ad32?q=80&w=500&auto=format&fit=crop" alt="Cheese Explosion">
+                <div class="item-info">
+                    <h3>CHEESE EXPLOSION</h3>
+                    <p>Bañada en fondue de cheddar y lluvia de bacon.</p>
+                    <span class="price">$9.200</span>
+                    <button class="add-btn" onclick="openModal('Cheese Explosion', 9200, 'burgers')">AGREGAR</button>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="burgers">
+                <img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?q=80&w=500&auto=format&fit=crop" alt="Spicy Hell">
+                <div class="item-info">
+                    <h3>SPICY HELL</h3>
+                    <p>Jalapeños, mayonesa picante y queso pepper jack.</p>
+                    <span class="price">$8.800</span>
+                    <button class="add-btn" onclick="openModal('Spicy Hell', 8800, 'burgers')">AGREGAR</button>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="burgers">
+                <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?q=80&w=500&auto=format&fit=crop" alt="Mushroom King">
+                <div class="item-info">
+                    <h3>MUSHROOM KING</h3>
+                    <p>Portobellos salteados y crema de hierbas.</p>
+                    <span class="price">$9.500</span>
+                    <button class="add-btn" onclick="openModal('Mushroom King', 9500, 'burgers')">AGREGAR</button>
+                </div>
             </div>
 
             <div class="menu-item" data-category="sides">
-                <img src="https://images.unsplash.com/photo-1630384066252-19e1ad955494?q=80&w=500" alt="Papas Fritas">
-                <div class="menu-info">
-                    <h3>Papas Fritas Tradicionales</h3>
-                    <p>Corte bastón, súper crocantes.</p>
-                    <span class="price">$3.000</span>
-                </div>
-                <button class="add-btn" onclick="openModal('Papas Fritas', 3000, 'sides')">AGREGAR</button>
-            </div>
-
-            <div class="menu-item" data-category="sides">
-                <img src="https://images.unsplash.com/photo-1573014133633-560dd432ee64?q=80&w=500" alt="Papas Cheddar">
-                <div class="menu-info">
-                    <h3>Papas con Cheddar y Bacon</h3>
-                    <p>Bañadas en cheddar fundido y lluvia de bacon.</p>
-                    <span class="price">$4.500</span>
-                </div>
-                <button class="add-btn" onclick="openModal('Papas Cheddar', 4500, 'sides')">AGREGAR</button>
-            </div>
-
-            <div class="menu-item" data-category="sides">
-                <img src="https://images.unsplash.com/photo-1639024471283-03518883512d?q=80&w=500" alt="Aros Cebolla">
-                <div class="menu-info">
-                    <h3>Aros de Cebolla Crujientes</h3>
-                    <p>Crocantes y dorados, con salsa dip.</p>
-                    <span class="price">$3.800</span>
-                </div>
-                <button class="add-btn" onclick="openModal('Aros Cebolla', 3800, 'sides')">AGREGAR</button>
-            </div>
-
-            <div class="menu-item" data-category="drinks">
-                <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=500" alt="Gaseosa">
-                <div class="menu-info">
-                    <h3>Gaseosa 500ml</h3>
-                    <p>Línea Coca-Cola.</p>
-                    <span class="price">$1.500</span>
-                </div>
-                <button class="add-btn" onclick="openModal('Gaseosa 500ml', 1500, 'drinks')">AGREGAR</button>
-            </div>
-
-            <div class="menu-item" data-category="drinks">
-                <img src="https://images.unsplash.com/photo-1535958636474-b021ee887b13?q=80&w=500" alt="Cerveza">
-                <div class="menu-info">
-                    <h3>Cerveza Artesanal IPA</h3>
-                    <p>500ml de puro lúpulo mendocino.</p>
+                <img src="https://images.unsplash.com/photo-1630384066252-19e1ad955494?q=80&w=500&auto=format&fit=crop" alt="Papas">
+                <div class="item-info">
+                    <h3>PAPAS TRADICIONALES</h3>
+                    <p>Bastón, crocantes y con sal de campo.</p>
                     <span class="price">$3.500</span>
+                    <button class="add-btn" onclick="openModal('Papas Tradicionales', 3500, 'sides')">AGREGAR</button>
                 </div>
-                <button class="add-btn" onclick="openModal('Cerveza IPA', 3500, 'drinks')">AGREGAR</button>
+            </div>
+
+            <div class="menu-item" data-category="sides">
+                <img src="https://images.unsplash.com/photo-1573014133633-560dd432ee64?q=80&w=500&auto=format&fit=crop" alt="Papas Cheddar">
+                <div class="item-info">
+                    <h3>PAPAS CON CHEDDAR</h3>
+                    <p>Con abundante cheddar y bacon crunch.</p>
+                    <span class="price">$4.800</span>
+                    <button class="add-btn" onclick="openModal('Papas con Cheddar', 4800, 'sides')">AGREGAR</button>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="drinks">
+                <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=500&auto=format&fit=crop" alt="Gaseosa">
+                <div class="item-info">
+                    <h3>GASEOSA 500ml</h3>
+                    <p>Línea Coca-Cola bien fría.</p>
+                    <span class="price">$1.800</span>
+                    <button class="add-btn" onclick="openModal('Gaseosa', 1800, 'drinks')">AGREGAR</button>
+                </div>
             </div>
         </div>
-    </section>
+    </main>
 
-    <div id="productModal" class="modal">
+    <div id="modal" class="modal-overlay">
         <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle">Personaliza tu pedido</h2>
-            
-            <div id="customizationOptions">
+            <span class="close-modal">&times;</span>
+            <div id="modal-body">
                 </div>
-
             <div class="modal-footer">
-                <span class="modal-price">Total: $<span id="modalCurrentPrice">0</span></span>
-                <button class="confirm-btn" id="confirmAdd">AGREGAR AL CARRITO</button>
+                <div class="modal-total">Subtotal: <span id="modal-price-display">$0</span></div>
+                <button class="confirm-btn" id="addToCartConfirm">CONFIRMAR PEDIDO</button>
             </div>
         </div>
     </div>
 
-    <footer id="contacto">
-        <p>&copy; 2025 Limbo Burgers - El sabor del purgatorio</p>
+    <footer>
+        <p>&copy; 2025 LIMBO BURGERS | MENDOZA, ARGENTINA</p>
     </footer>
 
     <script src="script.js"></script>
