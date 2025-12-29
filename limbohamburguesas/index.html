@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Limbo Burgers v10 | Elite Edition</title>
+    <title>Limbo Burgers v11 | The Great Catalog</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -24,7 +24,7 @@
         
         <div class="cart-panel" id="cartPanel">
             <div class="cart-header">
-                <h2>TU PEDIDO</h2>
+                <h2>MI PEDIDO</h2>
                 <button id="closeCart">✕</button>
             </div>
             <div id="cartItems" class="cart-items-container"></div>
@@ -33,7 +33,7 @@
                     <span>TOTAL:</span>
                     <span id="cartTotal">$0</span>
                 </div>
-                <button id="sendOrder" class="btn-whatsapp" onclick="sendWhatsAppOrder()">ENVIAR A WHATSAPP</button>
+                <button id="sendOrder" class="btn-whatsapp" onclick="sendWhatsAppOrder()">PEDIR POR WHATSAPP</button>
             </div>
         </div>
     </header>
@@ -41,108 +41,50 @@
     <section class="hero">
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <h1 class="hero-title">BIENVENIDO AL <span>LIMBO</span></h1>
-            <div id="status-banner" class="status-banner">Verificando cocina...</div>
-            <a href="#menu" class="cta-scroll">EXPLORAR CARTA</a>
+            <h1 class="hero-title">SABOR <span>SUPREMO</span></h1>
+            <div id="status-banner" class="status-banner">...</div>
+            <a href="#menu" class="cta-scroll">VER CARTA COMPLETA</a>
         </div>
     </section>
 
     <nav class="filter-nav">
         <div class="filter-container">
-            <button class="filter-btn active" data-filter="all">TODAS</button>
-            <button class="filter-btn" data-filter="burgers">HAMBURGUESAS</button>
+            <button class="filter-btn active" data-filter="all">TODO</button>
+            <button class="filter-btn" data-filter="burgers">BURGERS</button>
             <button class="filter-btn" data-filter="sides">SIDES</button>
             <button class="filter-btn" data-filter="drinks">BEBIDAS</button>
         </div>
     </nav>
 
     <main class="container" id="menu">
-        <div class="category-section" data-category="burgers">
-            <h2 class="category-title">HAMBURGUESAS ELITE</h2>
-            <div class="menu-grid">
-                <div class="menu-item" data-type="burgers">
-                    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80" alt="Inferno Double">
-                    <div class="item-info">
-                        <h3>INFERNO DOUBLE</h3>
-                        <p>Doble medallón 180g, cheddar x4, bacon y salsa Hell.</p>
-                        <span class="price">$9.500</span>
-                        <button class="add-btn" onclick="openModal('Inferno Double', 9500, 'burger')">AGREGAR</button>
-                    </div>
-                </div>
-                <div class="menu-item" data-type="burgers">
-                    <img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=600&q=80" alt="Glory Beef">
-                    <div class="item-info">
-                        <h3>GLORY BEEF</h3>
-                        <p>Medallón premium, aros de cebolla y BBQ ahumada.</p>
-                        <span class="price">$8.800</span>
-                        <button class="add-btn" onclick="openModal('Glory Beef', 8800, 'burger')">AGREGAR</button>
-                    </div>
-                </div>
-                <div class="menu-item" data-type="burgers">
-                    <img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=600&q=80" alt="Purgatory">
-                    <div class="item-info">
-                        <h3>PURGATORY</h3>
-                        <p>Triple carne, huevo frito, jamón y muzzarella.</p>
-                        <span class="price">$10.200</span>
-                        <button class="add-btn" onclick="openModal('Purgatory', 10200, 'burger')">AGREGAR</button>
-                    </div>
-                </div>
-                <div class="menu-item" data-type="burgers">
-                    <img src="https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=600&q=80" alt="Glory Chicken">
-                    <div class="item-info">
-                        <h3>GLORY CHICKEN</h3>
-                        <p>Pollo crispy, alioli de lima y lechuga morada.</p>
-                        <span class="price">$8.200</span>
-                        <button class="add-btn" onclick="openModal('Glory Chicken', 8200, 'burger')">AGREGAR</button>
-                    </div>
-                </div>
-                <div class="menu-item" data-type="burgers">
-                    <img src="https://images.unsplash.com/photo-1614398751058-eb2e0bf63e53?w=600&q=80" alt="Spicy Angel">
-                    <div class="item-info">
-                        <h3>SPICY ANGEL</h3>
-                        <p>Pollo frito, jalapeños y mayonesa de sriracha.</p>
-                        <span class="price">$8.500</span>
-                        <button class="add-btn" onclick="openModal('Spicy Angel', 8500, 'burger')">AGREGAR</button>
-                    </div>
-                </div>
-                <div class="menu-item" data-type="burgers">
-                    <img src="https://images.unsplash.com/photo-1520072959219-c595dc870360?w=600&q=80" alt="Garden of Eden">
-                    <div class="item-info">
-                        <h3>GARDEN OF EDEN</h3>
-                        <p>Medallón de lentejas, palta y cebolla caramelizada.</p>
-                        <span class="price">$7.900</span>
-                        <button class="add-btn" onclick="openModal('Garden of Eden', 7900, 'burger')">AGREGAR</button>
-                    </div>
-                </div>
-                </div>
-        </div>
+        <section id="burgers-container" class="category-section" data-category="burgers">
+            <h2 class="category-title">HAMBURGUESAS ARTESANALES</h2>
+            <div class="menu-grid"></div>
+        </section>
 
-        <div class="category-section" data-category="sides">
-            <h2 class="category-title">SIDES & SNACKS</h2>
-            <div class="menu-grid">
-                <div class="menu-item" data-type="sides">
-                    <img src="https://images.unsplash.com/photo-1573014133633-560dd432ee64?w=600&q=80" alt="Cheddar Bacon">
-                    <div class="item-info">
-                        <h3>PAPAS CHEDDAR & BACON</h3>
-                        <span class="price">$4.500</span>
-                        <button class="add-btn" onclick="openModal('Papas Cheddar Bacon', 4500, 'side')">AGREGAR</button>
-                    </div>
-                </div>
-                </div>
-        </div>
+        <section id="sides-container" class="category-section" data-category="sides">
+            <h2 class="category-title">PARA ACOMPAÑAR</h2>
+            <div class="menu-grid"></div>
+        </section>
 
-        <div class="category-section" data-category="drinks">
+        <section id="drinks-container" class="category-section" data-category="drinks">
             <h2 class="category-title">BEBIDAS & COCKTAILS</h2>
-            <div class="menu-grid" id="drinksGrid">
-                </div>
-        </div>
+            <div class="drinks-subgroup">
+                <h3 class="sub-title">CON ALCOHOL (+18)</h3>
+                <div class="menu-grid" id="drinks-alcohol"></div>
+            </div>
+            <div class="drinks-subgroup">
+                <h3 class="sub-title">SIN ALCOHOL</h3>
+                <div class="menu-grid" id="drinks-soft"></div>
+            </div>
+        </section>
     </main>
 
     <div id="productModal" class="modal">
         <div class="modal-content">
             <div id="modalBody"></div>
             <div class="modal-footer">
-                <button class="btn-confirm" id="confirmAdd">CONFIRMAR</button>
+                <button class="btn-confirm" id="confirmAdd">CONFIRMAR AGREGAR</button>
                 <button class="btn-cancel" onclick="closeModal()">CANCELAR</button>
             </div>
         </div>

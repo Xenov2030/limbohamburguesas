@@ -5,108 +5,57 @@
     --bg-card: #121212;
     --text-white: #FFFFFF;
     --text-gray: #B0B0B0;
-    --fire-glow: 0 0 20px rgba(255, 69, 0, 0.5);
-    --min-tap: 48px;
+    --fire-glow: 0 0 25px rgba(255, 69, 0, 0.4);
+    --skeleton: #1a1a1a;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-html { scroll-behavior: smooth; }
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--bg-black);
-    color: var(--text-white);
-    overflow-x: hidden;
-}
+body { font-family: 'Poppins', sans-serif; background: var(--bg-black); color: var(--text-white); overflow-x: hidden; }
 
 /* NAVBAR */
-.navbar {
-    position: fixed; top: 0; width: 100%; z-index: 1000;
-    background: rgba(0,0,0,0.95); backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255,69,0,0.3);
-    padding: 0.8rem 1rem;
-}
+.navbar { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(0,0,0,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,69,0,0.2); padding: 0.8rem 1rem; }
 .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
-.logo { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: white; text-decoration: none; letter-spacing: 2px; }
+.logo { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: white; text-decoration: none; }
 .logo span { color: var(--primary-fire); }
 
-/* BOTONES TÁCTILES */
-.cart-btn, .add-btn, .filter-btn, .btn-confirm {
-    min-height: var(--min-tap);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: 0.3s;
-}
-
-/* HERO SECTION */
-.hero {
-    height: 80vh; position: relative;
-    background: url('https://images.unsplash.com/photo-1550547660-d9450f859349?w=1200') center/cover;
-    display: flex; align-items: center; justify-content: center; text-align: center;
-}
-.hero-overlay { position: absolute; inset: 0; background: linear-gradient(0deg, #0A0A0A 0%, rgba(0,0,0,0.4) 100%); }
-.hero-content { position: relative; z-index: 2; padding: 20px; }
-.hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.5rem, 12vw, 7rem); line-height: 0.9; }
+/* HERO */
+.hero { height: 60vh; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; background: url('https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=1200&q=80') center/cover; }
+.hero-overlay { position: absolute; inset: 0; background: linear-gradient(0deg, #0A0A0A 100%, rgba(0,0,0,0.2) 0%); opacity: 0.85; }
+.hero-content { position: relative; z-index: 2; }
+.hero-title { font-family: 'Bebas Neue', sans-serif; font-size: 5rem; line-height: 0.8; }
 .hero-title span { color: var(--primary-fire); text-shadow: var(--fire-glow); }
 
-.status-banner {
-    margin: 20px 0; padding: 10px 20px; border-radius: 50px;
-    background: rgba(255,69,0,0.2); border: 1px solid var(--primary-fire);
-    display: inline-block; font-weight: 600; text-transform: uppercase;
+/* SKELETON LOADER */
+.menu-item img {
+    width: 100%; aspect-ratio: 16/9; object-fit: cover;
+    background-color: var(--skeleton);
+    background-image: linear-gradient(90deg, var(--skeleton) 0px, #222 50%, var(--skeleton) 100%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
 }
+@keyframes loading { to { background-position: -200% 0; } }
 
-/* FILTROS */
-.filter-nav {
-    position: sticky; top: 65px; z-index: 900;
-    background: var(--bg-black); padding: 15px 0; border-bottom: 1px solid #222;
-}
-.filter-container {
-    display: flex; gap: 10px; overflow-x: auto; padding: 0 15px;
-    scrollbar-width: none;
-}
-.filter-btn {
-    white-space: nowrap; padding: 0 20px; background: #1a1a1a;
-    border: 1px solid #333; color: var(--text-gray); border-radius: 5px;
-    font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem;
-}
-.filter-btn.active { background: var(--primary-fire); color: white; border-color: var(--primary-fire); }
+/* MENU & CATEGORIES */
+.container { padding: 2rem 1rem; max-width: 1200px; margin: 0 auto; }
+.category-title { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: var(--primary-fire); margin-bottom: 1.5rem; text-align: center; }
+.sub-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; margin: 2rem 0 1rem; border-left: 4px solid var(--primary-fire); padding-left: 10px; }
+.menu-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
 
-/* GRID & ITEMS */
-.container { padding: 2rem 15px; max-width: 1200px; margin: 0 auto; }
-.category-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--primary-fire); margin: 2rem 0 1rem; }
-.menu-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-
-.menu-item {
-    background: var(--bg-card); border-radius: 15px; overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.05); transition: 0.3s;
-}
-.menu-item img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
-.item-info { padding: 1.5rem; }
+.menu-item { background: var(--bg-card); border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.03); transition: 0.3s; }
+.item-info { padding: 1.2rem; }
 .item-info h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 1px; }
-.item-info p { color: var(--text-gray); font-size: 0.9rem; margin: 10px 0; height: 40px; }
-.price { display: block; font-size: 1.5rem; font-weight: 800; color: var(--primary-fire); margin-bottom: 15px; }
+.item-info p { color: var(--text-gray); font-size: 0.85rem; margin: 8px 0; min-height: 38px; }
+.price { font-size: 1.6rem; font-weight: 800; color: var(--primary-fire); display: block; margin-bottom: 1rem; }
+.add-btn { width: 100%; height: 48px; background: transparent; border: 1px solid var(--primary-fire); color: white; font-weight: 700; cursor: pointer; border-radius: 6px; }
 
-.add-btn { width: 100%; background: transparent; border: 1px solid var(--primary-fire); color: white; font-weight: 800; }
-
-/* PANEL CARRITO (Lógica Mobile-First) */
-.cart-panel {
-    position: fixed; top: 0; right: -100%; width: 100%; height: 100%;
-    background: #000; z-index: 2000; transition: 0.4s ease;
-    display: flex; flex-direction: column;
-}
+/* CART & MODAL (Resumido para Mobile First) */
+.cart-panel { position: fixed; top: 0; right: -100%; width: 100%; height: 100%; background: #000; z-index: 2000; transition: 0.4s; display: flex; flex-direction: column; }
 .cart-panel.active { right: 0; }
-.cart-header { padding: 20px; border-bottom: 1px solid #222; display: flex; justify-content: space-between; }
-.cart-items-container { flex: 1; overflow-y: auto; padding: 20px; }
-.cart-footer { padding: 20px; background: #111; border-top: 1px solid var(--primary-fire); }
-.total-row { display: flex; justify-content: space-between; font-size: 1.5rem; font-weight: 800; margin-bottom: 15px; }
-.btn-whatsapp { width: 100%; background: #25D366; color: white; border: none; padding: 15px; font-weight: 800; border-radius: 8px; }
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 3000; }
+.modal-content { background: #111; width: 90%; max-width: 450px; padding: 2rem; border-radius: 15px; border: 1px solid var(--primary-fire); }
 
-/* MODAL */
-.modal {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.9);
-    display: none; align-items: center; justify-content: center; z-index: 3000;
-}
-.modal-content { background: #151515; width: 90%; max-width: 500px; padding: 2rem; border: 1px solid var(--primary-fire); border-radius: 12px; }
+.badge-alcohol { background: red; color: white; padding: 2px 8px; font-size: 0.7rem; border-radius: 4px; font-weight: 900; vertical-align: middle; margin-right: 5px; }
 
-/* RESPONSIVE DESKTOP */
 @media (min-width: 768px) {
     .menu-grid { grid-template-columns: repeat(2, 1fr); }
     .cart-panel { width: 400px; }
