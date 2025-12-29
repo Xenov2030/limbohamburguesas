@@ -3,7 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Limbo Burgers v11 | The Great Catalog</title>
+    
+    <title>Limbo Burgers | El Sabor Prohibido</title>
+    <meta name="description" content="Las hamburguesas más épicas de Mendoza. Carne premium, fuego real y un sabor del que no querrás escapar.">
+    <meta property="og:title" content="Limbo Burgers | Pedir Ahora">
+    <meta property="og:description" content="Descubre el catálogo definitivo: 43 razones para pecar. 🔥">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=800&q=80">
+    <meta property="og:url" content="https://limbo-burgers.com">
+    <meta name="theme-color" content="#FF4500">
+
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -16,15 +24,12 @@
                     <span class="cart-icon">🛒</span>
                     <span id="cartCount">0</span>
                 </button>
-                <div class="burger" id="burgerMenu">
-                    <span></span><span></span><span></span>
-                </div>
             </div>
         </div>
         
         <div class="cart-panel" id="cartPanel">
             <div class="cart-header">
-                <h2>MI PEDIDO</h2>
+                <h2>TU PEDIDO</h2>
                 <button id="closeCart">✕</button>
             </div>
             <div id="cartItems" class="cart-items-container"></div>
@@ -33,7 +38,7 @@
                     <span>TOTAL:</span>
                     <span id="cartTotal">$0</span>
                 </div>
-                <button id="sendOrder" class="btn-whatsapp" onclick="sendWhatsAppOrder()">PEDIR POR WHATSAPP</button>
+                <button id="sendOrder" class="btn-finalize" onclick="sendWhatsAppOrder()">FINALIZAR PEDIDO 🔥</button>
             </div>
         </div>
     </header>
@@ -41,9 +46,10 @@
     <section class="hero">
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <h1 class="hero-title">SABOR <span>SUPREMO</span></h1>
+            <h1 class="hero-title">EL SABOR DEL <span>PURGATORIO</span></h1>
             <div id="status-banner" class="status-banner">...</div>
-            <a href="#menu" class="cta-scroll">VER CARTA COMPLETA</a>
+            
+            
         </div>
     </section>
 
@@ -57,35 +63,51 @@
     </nav>
 
     <main class="container" id="menu">
-        <section id="burgers-container" class="category-section" data-category="burgers">
-            <h2 class="category-title">HAMBURGUESAS ARTESANALES</h2>
+        <div id="burgers-section" class="category-block" data-category="burgers">
+            <h2 class="section-title">HAMBURGUESAS ARTESANALES</h2>
             <div class="menu-grid"></div>
-        </section>
+        </div>
 
-        <section id="sides-container" class="category-section" data-category="sides">
-            <h2 class="category-title">PARA ACOMPAÑAR</h2>
+        <div id="sides-section" class="category-block" data-category="sides">
+            <h2 class="section-title">ACOMPAÑAMIENTOS</h2>
             <div class="menu-grid"></div>
-        </section>
+        </div>
 
-        <section id="drinks-container" class="category-section" data-category="drinks">
-            <h2 class="category-title">BEBIDAS & COCKTAILS</h2>
-            <div class="drinks-subgroup">
-                <h3 class="sub-title">CON ALCOHOL (+18)</h3>
+        <div id="drinks-section" class="category-block" data-category="drinks">
+            <h2 class="section-title">LÍQUIDOS PROHIBIDOS</h2>
+            <div class="drinks-grid-wrapper">
+                <h3 class="sub-category">CON ALCOHOL (+18)</h3>
                 <div class="menu-grid" id="drinks-alcohol"></div>
-            </div>
-            <div class="drinks-subgroup">
-                <h3 class="sub-title">SIN ALCOHOL</h3>
+                <h3 class="sub-category">SIN ALCOHOL</h3>
                 <div class="menu-grid" id="drinks-soft"></div>
             </div>
-        </section>
+        </div>
     </main>
+
+    <section class="reviews">
+        <h2 class="section-title">RESEÑAS DE PECADORES</h2>
+        <div class="reviews-container">
+            <div class="review-card">
+                <p>"La Diablo Burger me cambió la vida. El picante justo y la carne es de otro mundo."</p>
+                <span>- Marcos R.</span>
+            </div>
+            <div class="review-card">
+                <p>"El delivery más rápido de Mendoza. Las papas trufadas llegaron crujientes, un milagro."</p>
+                <span>- Sofía G.</span>
+            </div>
+            <div class="review-card">
+                <p>"Estética increíble y sabor superior. El Gin Tonic es el mejor compañero para la Limbus."</p>
+                <span>- Christian T.</span>
+            </div>
+        </div>
+    </section>
 
     <div id="productModal" class="modal">
         <div class="modal-content">
             <div id="modalBody"></div>
             <div class="modal-footer">
-                <button class="btn-confirm" id="confirmAdd">CONFIRMAR AGREGAR</button>
-                <button class="btn-cancel" onclick="closeModal()">CANCELAR</button>
+                <button class="confirm-btn" id="confirmAdd">AGREGAR AL PECADO</button>
+                <button class="cancel-btn" onclick="closeModal()">VOLVER</button>
             </div>
         </div>
     </div>
