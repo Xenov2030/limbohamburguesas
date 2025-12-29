@@ -3,26 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Limbo Burgers v13.0 | El Sabor Prohibido</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <title>Limbo Burgers v14.0 | El Sabor Prohibido</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header class="navbar">
         <div class="nav-container">
             <a href="#" class="logo">LIMBO<span>BURGERS</span></a>
-            <div class="nav-actions">
-                <div class="burger" id="burger">
-                    <span></span><span></span><span></span>
-                </div>
-            </div>
+            <div id="status-business" class="status-indicator">Verificando...</div>
         </div>
     </header>
 
     <section class="hero">
         <div class="hero-content">
-            <h1 class="hero-title">EL SABOR QUE TE LLEVA AL <span>CIELO</span></h1>
-            <p id="status-business">🔥 ¡PARRILLA ENCENDIDA!</p>
+            <h1>PECADO CON <span>FUEGO</span> REAL</h1>
+            <p>Mendoza, Argentina</p>
         </div>
     </section>
 
@@ -42,7 +38,7 @@
     <footer id="contact">
         <div class="footer-content">
             <div class="footer-section">
-                <h3>Limbo Burgers</h3>
+                <h3 class="logo">LIMBO<span>BURGERS</span></h3>
                 <p>El sabor que te lleva al cielo.</p>
                 <div class="social-links">
                     <a href="#"><img src="RECURSOS VISUALES/facebook.png" alt="Facebook"></a>
@@ -50,7 +46,7 @@
                 </div>
             </div>
             <div class="footer-section">
-                <h3>📍 Ubicación</h3>
+                <h3>📍 UBICACIÓN</h3>
                 <p>Mendoza, Argentina - Av. San Martín 1234</p>
                 <p>📞 +54 9 261 534 9682</p>
             </div>
@@ -75,7 +71,17 @@
                 <span>TOTAL:</span>
                 <span id="cartTotal">$0</span>
             </div>
-            <button class="btn-whatsapp" onclick="sendWhatsAppOrder()">PEDIR POR WHATSAPP</button>
+            <button class="btn-whatsapp" id="btn-order" onclick="sendWhatsAppOrder()">PEDIR POR WHATSAPP</button>
+        </div>
+    </div>
+
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div id="modalBody"></div>
+            <div class="modal-footer">
+                <button class="confirm-btn" id="confirmAdd">AGREGAR AL PEDIDO</button>
+                <button class="cancel-btn" onclick="closeModal()">CANCELAR</button>
+            </div>
         </div>
     </div>
 
