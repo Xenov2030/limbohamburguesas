@@ -3,16 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <title>Limbo Burgers | El Sabor Prohibido</title>
-    <meta name="description" content="Las hamburguesas más épicas de Mendoza. Carne premium, fuego real y un sabor del que no querrás escapar.">
-    <meta property="og:title" content="Limbo Burgers | Pedir Ahora">
-    <meta property="og:description" content="Descubre el catálogo definitivo: 43 razones para pecar. 🔥">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=800&q=80">
-    <meta property="og:url" content="https://limbo-burgers.com">
-    <meta name="theme-color" content="#FF4500">
-
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>Limbo Burgers v13.0 | El Sabor Prohibido</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -20,95 +12,70 @@
         <div class="nav-container">
             <a href="#" class="logo">LIMBO<span>BURGERS</span></a>
             <div class="nav-actions">
-                <button class="cart-btn" id="cartToggle">
-                    <span class="cart-icon">🛒</span>
-                    <span id="cartCount">0</span>
-                </button>
-            </div>
-        </div>
-        
-        <div class="cart-panel" id="cartPanel">
-            <div class="cart-header">
-                <h2>TU PEDIDO</h2>
-                <button id="closeCart">✕</button>
-            </div>
-            <div id="cartItems" class="cart-items-container"></div>
-            <div class="cart-footer">
-                <div class="total-row">
-                    <span>TOTAL:</span>
-                    <span id="cartTotal">$0</span>
+                <div class="burger" id="burger">
+                    <span></span><span></span><span></span>
                 </div>
-                <button id="sendOrder" class="btn-finalize" onclick="sendWhatsAppOrder()">FINALIZAR PEDIDO 🔥</button>
             </div>
         </div>
     </header>
 
     <section class="hero">
-        <div class="hero-overlay"></div>
         <div class="hero-content">
-            <h1 class="hero-title">EL SABOR DEL <span>PURGATORIO</span></h1>
-            <div id="status-banner" class="status-banner">...</div>
-            
-            
+            <h1 class="hero-title">EL SABOR QUE TE LLEVA AL <span>CIELO</span></h1>
+            <p id="status-business">🔥 ¡PARRILLA ENCENDIDA!</p>
         </div>
     </section>
 
-    <nav class="filter-nav">
-        <div class="filter-container">
-            <button class="filter-btn active" data-filter="all">TODO</button>
-            <button class="filter-btn" data-filter="burgers">BURGERS</button>
-            <button class="filter-btn" data-filter="sides">SIDES</button>
-            <button class="filter-btn" data-filter="drinks">BEBIDAS</button>
-        </div>
+    <nav class="filters-container">
+        <button class="filter-btn active" data-filter="all">TODOS</button>
+        <button class="filter-btn" data-filter="burgers">BURGERS</button>
+        <button class="filter-btn" data-filter="veggie">VEGGIE</button>
+        <button class="filter-btn" data-filter="sides">SIDES</button>
+        <button class="filter-btn" data-filter="drinks">BEBIDAS</button>
     </nav>
 
-    <main class="container" id="menu">
-        <div id="burgers-section" class="category-block" data-category="burgers">
-            <h2 class="section-title">HAMBURGUESAS ARTESANALES</h2>
-            <div class="menu-grid"></div>
-        </div>
-
-        <div id="sides-section" class="category-block" data-category="sides">
-            <h2 class="section-title">ACOMPAÑAMIENTOS</h2>
-            <div class="menu-grid"></div>
-        </div>
-
-        <div id="drinks-section" class="category-block" data-category="drinks">
-            <h2 class="section-title">LÍQUIDOS PROHIBIDOS</h2>
-            <div class="drinks-grid-wrapper">
-                <h3 class="sub-category">CON ALCOHOL (+18)</h3>
-                <div class="menu-grid" id="drinks-alcohol"></div>
-                <h3 class="sub-category">SIN ALCOHOL</h3>
-                <div class="menu-grid" id="drinks-soft"></div>
+    <main class="container">
+        <div id="menu-grid" class="menu-grid">
             </div>
-        </div>
     </main>
 
-    <section class="reviews">
-        <h2 class="section-title">RESEÑAS DE PECADORES</h2>
-        <div class="reviews-container">
-            <div class="review-card">
-                <p>"La Diablo Burger me cambió la vida. El picante justo y la carne es de otro mundo."</p>
-                <span>- Marcos R.</span>
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Limbo Burgers</h3>
+                <p>El sabor que te lleva al cielo.</p>
+                <div class="social-links">
+                    <a href="#"><img src="RECURSOS VISUALES/facebook.png" alt="Facebook"></a>
+                    <a href="#"><img src="RECURSOS VISUALES/logotipo-de-instagram.png" alt="Instagram"></a>
+                </div>
             </div>
-            <div class="review-card">
-                <p>"El delivery más rápido de Mendoza. Las papas trufadas llegaron crujientes, un milagro."</p>
-                <span>- Sofía G.</span>
-            </div>
-            <div class="review-card">
-                <p>"Estética increíble y sabor superior. El Gin Tonic es el mejor compañero para la Limbus."</p>
-                <span>- Christian T.</span>
+            <div class="footer-section">
+                <h3>📍 Ubicación</h3>
+                <p>Mendoza, Argentina - Av. San Martín 1234</p>
+                <p>📞 +54 9 261 534 9682</p>
             </div>
         </div>
-    </section>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Limbo Burgers. Desarrollado por Nicolas Aguirres</p>
+        </div>
+    </footer>
 
-    <div id="productModal" class="modal">
-        <div class="modal-content">
-            <div id="modalBody"></div>
-            <div class="modal-footer">
-                <button class="confirm-btn" id="confirmAdd">AGREGAR AL PECADO</button>
-                <button class="cancel-btn" onclick="closeModal()">VOLVER</button>
+    <button class="cart-float" id="cartToggle">
+        🛒 <span id="cartCount">0</span>
+    </button>
+
+    <div class="cart-panel" id="cartPanel">
+        <div class="cart-header">
+            <h2>MI PEDIDO</h2>
+            <button id="closeCart">✕</button>
+        </div>
+        <div id="cartItems" class="cart-items-container"></div>
+        <div class="cart-footer">
+            <div class="total-row">
+                <span>TOTAL:</span>
+                <span id="cartTotal">$0</span>
             </div>
+            <button class="btn-whatsapp" onclick="sendWhatsAppOrder()">PEDIR POR WHATSAPP</button>
         </div>
     </div>
 
