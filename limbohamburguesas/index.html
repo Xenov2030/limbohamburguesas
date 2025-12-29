@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Limbo Burgers v16.0 | Final UX Edition</title>
+    <title>Limbo Burgers| El Sabor del Pecado</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -11,13 +11,17 @@
     <header class="navbar">
         <div class="nav-container">
             <a href="#" class="logo">LIMBO<span>BURGERS</span></a>
-            <div id="status-business" class="status-indicator">VERIFICANDO...</div>
+            <div id="business-status-container" class="status-header">
+                <span id="led-indicator" class="led"></span>
+                <span id="status-text">VERIFICANDO...</span>
+            </div>
         </div>
     </header>
 
     <section class="hero">
+        <div class="hero-overlay"></div>
         <div class="hero-content">
-            <h1>EL PECADO QUE <span>MERECES</span></h1>
+            <h1>PECADO EN <span>CADA MORDIDA</span></h1>
             <p>Mendoza, Argentina • Parrilla a Leña</p>
         </div>
     </section>
@@ -31,37 +35,24 @@
     </nav>
 
     <main class="container">
-        <div id="menu-grid" class="menu-grid"></div>
+        <div id="menu-grid" class="menu-grid">
+            </div>
     </main>
-
-    <section class="reviews">
-        <h2 class="section-title">TESTIMONIOS DE <span>PECADORES</span></h2>
-        <div class="reviews-container">
-            <div class="review-card">
-                <p>"La Limbus Quad es una obra de arte. El sabor ahumado es real."</p>
-                <span>- Franco M.</span>
-            </div>
-            <div class="review-card">
-                <p>"Increíble opción vegana, el falafel es el mejor de Mendoza."</p>
-                <span>- Lucia P.</span>
-            </div>
-        </div>
-    </section>
 
     <footer id="contact">
         <div class="footer-content">
             <div class="footer-section">
                 <h3 class="logo">LIMBO<span>BURGERS</span></h3>
-                <p>Mendoza, Argentina - Av. San Martín 1234</p>
+                <p>El sabor que te lleva al cielo.</p>
                 <div class="social-links">
                     <a href="#"><img src="RECURSOS VISUALES/facebook.png" alt="Facebook"></a>
                     <a href="#"><img src="RECURSOS VISUALES/logotipo-de-instagram.png" alt="Instagram"></a>
                 </div>
             </div>
             <div class="footer-section">
-                <h3>📍 HORARIOS</h3>
-                <p>Lunes a Domingos</p>
-                <p>12:00 a 23:00 hs</p>
+                <h3>📍 UBICACIÓN</h3>
+                <p>Av. San Martín 1234 - Mendoza, Argentina</p>
+                <p>📞 +54 9 261 534 9682</p>
             </div>
         </div>
         <div class="footer-bottom">
@@ -69,7 +60,7 @@
         </div>
     </footer>
 
-    <button class="cart-float pulse" id="cartToggle">
+    <button class="cart-float" id="cartToggle">
         🛒 <span id="cartCount">0</span>
     </button>
 
@@ -80,50 +71,50 @@
         </div>
         <div id="cartItems" class="cart-items-container"></div>
         
-        <div class="cart-delivery-logic">
-            <h3>¿CÓMO LO RECIBES?</h3>
-            <div class="delivery-toggle-group">
-                <button class="toggle-btn active" id="btnPickup" onclick="setDeliveryMethod('pickup')">RETIRO</button>
-                <button class="toggle-btn" id="btnDelivery" onclick="setDeliveryMethod('delivery')">ENVÍO</button>
+        <div class="logistics-box">
+            <h3>MÉTODO DE ENTREGA</h3>
+            <div class="method-selector">
+                <button class="method-btn active" id="btnPickup" onclick="setDelivery('pickup')">RETIRO</button>
+                <button class="method-btn" id="btnDelivery" onclick="setDelivery('delivery')">ENVÍO</button>
             </div>
             
-            <div id="zoneContainer" class="hidden">
-                <label>ZONA DE ENVÍO:</label>
-                <select id="deliveryZone" onchange="updateUI()">
+            <div id="delivery-zones" class="zone-selector-container hidden">
+                <label>Selecciona tu zona:</label>
+                <select id="zoneSelect" onchange="updateCartTotals()">
                     <option value="1500">Ciudad ($1.500)</option>
                     <option value="1200">Godoy Cruz ($1.200)</option>
                     <option value="1800">Guaymallén ($1.800)</option>
-                    <option value="1000">Luján / Chacras ($1.000)</option>
+                    <option value="1000">Luján ($1.000)</option>
                     <option value="2000">Maipú ($2.000)</option>
                 </select>
             </div>
         </div>
 
         <div class="cart-footer">
-            <div class="total-row"><span>SUBTOTAL:</span><span id="subtotalVal">$0</span></div>
-            <div class="total-row"><span>ENVÍO:</span><span id="shippingVal">$0</span></div>
-            <div class="total-row main-total"><span>TOTAL:</span><span id="totalVal">$0</span></div>
-            <button class="btn-whatsapp" id="btn-order" onclick="sendWhatsAppOrder()">ENVIAR A COCINA 🔥</button>
+            <div class="price-row"><span>SUBTOTAL:</span><span id="subtotalVal">$0</span></div>
+            <div class="price-row"><span>ENVÍO:</span><span id="shippingVal">$0</span></div>
+            <div class="price-row main-total"><span>TOTAL:</span><span id="totalVal">$0</span></div>
+            <button class="btn-whatsapp" id="orderBtn" onclick="sendOrder()">PEDIR POR WHATSAPP</button>
         </div>
     </div>
 
     <div id="productModal" class="modal">
         <div class="modal-content">
             <div id="modalBody"></div>
-            <div class="modal-price-tag">Subtotal Item: <span id="modalCurrentPrice">$0</span></div>
-            <div class="modal-footer">
-                <button class="confirm-btn" id="confirmAdd">AGREGAR AL PEDIDO</button>
+            <div class="modal-price-display">Subtotal: <span id="modalCurrentPrice">$0</span></div>
+            <div class="modal-actions">
+                <button class="confirm-btn" id="confirmAdd">AGREGAR AL PECADO</button>
                 <button class="cancel-btn" onclick="closeModal()">CANCELAR</button>
             </div>
         </div>
     </div>
 
     <div id="ageModal" class="modal">
-        <div class="modal-content text-center">
-            <h2 style="font-size: 3rem;">🔞 +18</h2>
-            <p>Este producto contiene alcohol. ¿Confirmas que eres mayor de edad?</p>
-            <div class="modal-footer" style="flex-direction: column;">
-                <button class="confirm-btn" id="ageConfirmBtn">SOY MAYOR DE EDAD</button>
+        <div class="modal-content age-check">
+            <h2>🔞 CONTROL DE EDAD</h2>
+            <p>Este producto contiene alcohol. ¿Confirmas que eres mayor de 18 años?</p>
+            <div class="modal-actions-column">
+                <button class="confirm-btn" onclick="confirmAge()">SÍ, SOY MAYOR</button>
                 <button class="cancel-btn" onclick="closeAgeModal()">NO, SOY MENOR</button>
             </div>
         </div>
