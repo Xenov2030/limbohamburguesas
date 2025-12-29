@@ -1,5 +1,5 @@
 /**
- * LIMBO BURGERS - LÓGICA V8.0 DARK PREMIUM
+ * LIMBO BURGERS - V9.0 MOBILE-FIRST VIP
  */
 
 let cart = [];
@@ -8,95 +8,68 @@ let currentItem = null;
 // --- ELEMENTOS ---
 const cartDropdown = document.getElementById('cartDropdown');
 const cartToggle = document.getElementById('cartToggle');
+const closeCart = document.getElementById('closeCart');
 const modal = document.getElementById('modal');
 const modalBody = document.getElementById('modal-body');
-const closeModalBtn = document.querySelector('.close-modal');
 
 // --- LÓGICA DE HORARIO ---
-function checkHours() {
+function updateBusinessStatus() {
     const hour = new Date().getHours();
-    const status = document.getElementById('status-business');
-    if(hour >= 12 && hour < 23) {
-        status.innerHTML = "🔥 ¡PARRILLA ENCENDIDA!";
-        status.style.color = "#FF4500";
+    const statusEl = document.getElementById('status-business');
+    const sendBtn = document.getElementById('sendOrder');
+    
+    // 12:00 a 23:00
+    const isOpen = hour >= 12 && hour < 23;
+
+    if (isOpen) {
+        statusEl.innerHTML = "🔥 PARRILLA ENCENDIDA";
+        statusEl.style.color = "#FF4500";
+        if(sendBtn) sendBtn.disabled = false;
     } else {
-        status.innerHTML = "💤 VOLVEMOS A LAS 12:00 HS";
-        status.style.color = "#888";
+        statusEl.innerHTML = "💤 CERRADO - ABRE 12:00HS";
+        statusEl.style.color = "#888";
+        if(sendBtn) sendBtn.disabled = true;
     }
 }
 
-// --- GESTIÓN DE MODAL ---
+// --- GESTIÓN DE MODAL VIP ---
 function openModal(name, price, category) {
-    currentItem = { name, basePrice: price, totalPrice: price, category, extras: [] };
+    currentItem = { name, basePrice: price, totalPrice: price, category };
     
-    modalBody.innerHTML = `
-        <h2>${name.toUpperCase()}</h2>
-        <p class="modal-desc">Personaliza tu pedido a continuación</p>
-    `;
+    let content = `<h2 style="font-family:'Bebas Neue'; font-size:2rem; color:var(--primary-fire)">${name}</h2>`;
 
     if (category === 'burgers') {
-        modalBody.innerHTML += `
+        content += `
             <div class="opt-group">
-                <label>PUNTO DE LA CARNE</label>
+                <label>PUNTO DE COCCIÓN</label>
                 <select id="meat-point">
                     <option value="A punto">A punto (Rosado)</option>
-                    <option value="Jugosa">Jugosa (Bien roja)</option>
-                    <option value="Cocida">Cocida</option>
+                    <option value="Jugosa">Jugosa (Corte rojo)</option>
+                    <option value="Cocida">Bien cocida</option>
                 </select>
-            </div>
-            <div class="opt-group">
-                <label>EXTRAS PREMIUM</label>
-                <div class="checkbox-wrapper">
-                    <input type="checkbox" id="extra-cheddar" value="500" onchange="updateModalPrice()"> 
-                    Extra Cheddar (+$500)
-                </div>
-                <div class="checkbox-wrapper" style="margin-top:10px">
-                    <input type="checkbox" id="extra-bacon" value="800" onchange="updateModalPrice()"> 
-                    Extra Bacon (+$800)
-                </div>
             </div>
         `;
-    } else if (category === 'drinks') {
-        modalBody.innerHTML += `
-            <div class="opt-group">
-                <label>PREPARACIÓN</label>
-                <select id="drink-opt">
-                    <option value="Fría de heladera">Fría de heladera</option>
-                    <option value="Con vaso y hielo">Con vaso y hielo</option>
-                </select>
+    } else if (category === 'alcohol') {
+        content += `
+            <div class="opt-group" style="text-align:center; padding: 1rem; border: 1px dashed red;">
+                <p style="color:#ff4444; font-weight:bold;">⚠️ ATENCIÓN</p>
+                <p style="font-size:0.8rem;">Debes ser mayor de 18 años para comprar este producto. Se solicitará DNI al recibir.</p>
             </div>
         `;
     } else {
-        modalBody.innerHTML += `<p style="margin-top:20px; color:#A0A0A0">Se añadirá a tu carrito con nuestra receta original.</p>`;
+        content += `<p style="margin-top:1rem; color:#888;">Se agregará a tu pedido inmediatamente.</p>`;
     }
 
-    updateModalPrice();
+    modalBody.innerHTML = content;
     modal.style.display = 'flex';
 }
 
-function updateModalPrice() {
-    let extraTotal = 0;
-    const cheddar = document.getElementById('extra-cheddar');
-    const bacon = document.getElementById('extra-bacon');
-
-    if (cheddar && cheddar.checked) extraTotal += 500;
-    if (bacon && bacon.checked) extraTotal += 800;
-
-    currentItem.totalPrice = currentItem.basePrice + extraTotal;
-    document.getElementById('modal-price-display').innerText = `$${currentItem.totalPrice.toLocaleString()}`;
-}
-
 document.getElementById('addToCartConfirm').onclick = () => {
-    let detail = "";
+    let detail = "Estándar";
     if (currentItem.category === 'burgers') {
-        const point = document.getElementById('meat-point').value;
-        const extraC = document.getElementById('extra-cheddar').checked ? "Extra Cheddar" : "";
-        const extraB = document.getElementById('extra-bacon').checked ? "Extra Bacon" : "";
-        detail = `${point} ${extraC ? '+ ' + extraC : ''} ${extraB ? '+ ' + extraB : ''}`;
-    } else if (currentItem.category === 'drinks') {
-        detail = document.getElementById('drink-opt').value;
-    } else {
-        detail = "Tradicional";
+        detail = "Punto: " + document.getElementById('meat-point').value;
+    } else if (currentItem.category === 'alcohol') {
+        detail = "Validación +18 requerida";
     }
 
     cart.push({
@@ -107,18 +80,19 @@ document.getElementById('addToCartConfirm').onclick = () => {
 
     saveAndUpdate();
     closeModal();
+    if(window.innerWidth < 768) cartDropdown.classList.add('active'); // Mostrar feedback en mobile
 };
 
-// --- CARRITO Y PERSISTENCIA ---
+// --- CARRITO ---
 function saveAndUpdate() {
-    localStorage.setItem('limbo_cart_v8', JSON.stringify(cart));
+    localStorage.setItem('limbo_cart_v9', JSON.stringify(cart));
     renderCart();
 }
 
 function renderCart() {
     const container = document.getElementById('cartItems');
-    const count = document.getElementById('cartCount');
-    const totalDisp = document.getElementById('cartTotal');
+    const countEl = document.getElementById('cartCount');
+    const totalEl = document.getElementById('cartTotal');
     
     container.innerHTML = "";
     let total = 0;
@@ -131,16 +105,16 @@ function renderCart() {
                     <strong>${item.name}</strong><br>
                     <small style="color:#666">${item.detail}</small>
                 </div>
-                <div>
-                    $${item.price.toLocaleString()}
-                    <button onclick="removeItem(${index})" style="background:none; border:none; color:red; cursor:pointer; margin-left:10px">✕</button>
+                <div style="text-align:right">
+                    $${item.price.toLocaleString()}<br>
+                    <button onclick="removeItem(${index})" style="color:red; background:none; border:none; margin-top:5px">Eliminar</button>
                 </div>
             </div>
         `;
     });
 
-    count.innerText = cart.length;
-    totalDisp.innerText = `$${total.toLocaleString()}`;
+    countEl.innerText = cart.length;
+    totalEl.innerText = `$${total.toLocaleString()}`;
 }
 
 function removeItem(index) {
@@ -148,51 +122,47 @@ function removeItem(index) {
     saveAndUpdate();
 }
 
-// --- WHATSAPP TICKET PRO ---
+// --- WHATSAPP TICKET ---
 function sendWhatsAppOrder() {
-    if (cart.length === 0) return alert("Tu carrito está vacío");
+    if (cart.length === 0) return alert("Tu carrito está vacío.");
 
     let message = "🔥 *NUEVO PEDIDO - LIMBO BURGERS*\n\n";
     let total = 0;
 
-    cart.forEach(item => {
-        message += `📍 *1x ${item.name}*\n   _${item.detail}_\n   *Price:* $${item.price.toLocaleString()}\n\n`;
+    cart.forEach((item, i) => {
+        message += `*${i+1}. ${item.name}*\n   _${item.detail}_\n   $${item.price.toLocaleString()}\n\n`;
         total += item.price;
     });
 
-    message += `──────────────\n*TOTAL A PAGAR: $${total.toLocaleString()}*`;
-    
+    message += `*TOTAL A PAGAR: $${total.toLocaleString()}*`;
+    message += `\n\n_Ubicación: Mendoza, Argentina_`;
+
     const phone = "5492615349682";
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
 }
 
 // --- EVENTOS ---
-cartToggle.onclick = (e) => { e.stopPropagation(); cartDropdown.classList.toggle('active'); };
-closeModalBtn.onclick = closeModal;
-window.onclick = (e) => { if (e.target == modal) closeModal(); };
+cartToggle.onclick = () => cartDropdown.classList.toggle('active');
+if(closeCart) closeCart.onclick = () => cartDropdown.classList.remove('active');
+document.getElementById('closeModal').onclick = closeModal;
 
 function closeModal() { modal.style.display = 'none'; }
 
-// --- FILTROS ---
+// Filtros
 document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.onclick = () => {
         document.querySelector('.filter-btn.active').classList.remove('active');
         btn.classList.add('active');
-        const filter = btn.dataset.filter;
-        
+        const f = btn.dataset.filter;
         document.querySelectorAll('.menu-item').forEach(item => {
-            if (filter === 'all' || item.dataset.category === filter) {
-                item.style.display = 'block';
-            } else {
-                item.style.display = 'none';
-            }
+            item.style.display = (f === 'all' || item.dataset.category === f) ? 'block' : 'none';
         });
     };
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    const saved = localStorage.getItem('limbo_cart_v8');
+    const saved = localStorage.getItem('limbo_cart_v9');
     if (saved) cart = JSON.parse(saved);
     renderCart();
-    checkHours();
+    updateBusinessStatus();
 });
