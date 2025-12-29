@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Limbo Burgers| El Sabor del Pecado</title>
+    <title>Limbo Burgers | El sabor del PECADO</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -21,8 +21,9 @@
     <section class="hero">
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <h1>PECADO EN <span>CADA MORDIDA</span></h1>
-            <p>Mendoza, Argentina • Parrilla a Leña</p>
+            <h1>EL PECADO DE <span>MENDOZA</span></h1>
+            <p>Parrilla a Leña • 100% Carne Argentina</p>
+            <p>El pecado en cada mordida</p>
         </div>
     </section>
 
@@ -43,10 +44,14 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3 class="logo">LIMBO<span>BURGERS</span></h3>
-                <p>El sabor que te lleva al cielo.</p>
+                <p>Un Sabor que parece pecado</p>
                 <div class="social-links">
-                    <a href="#"><img src="RECURSOS VISUALES/facebook.png" alt="Facebook"></a>
-                    <a href="#"><img src="RECURSOS VISUALES/logotipo-de-instagram.png" alt="Instagram"></a>
+                    <a href="#" target="_blank">
+                        <img src="recursos visuales/facebook.png" alt="Facebook">
+                    </a>
+                    <a href="#" target="_blank">
+                        <img src="recursos visuales/logotipo-de-instagram.png" alt="Instagram">
+                    </a>
                 </div>
             </div>
             <div class="footer-section">
@@ -56,11 +61,13 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 Limbo Burgers. Desarrollado por Nicolas Aguirres</p>
+            <p>&copy; 2025 Limbo Burgers. Desarrollado por 
+                <a href="https://portfolionicolasaguirres.netlify.app/" target="_blank" style="color: var(--primary-fire); text-decoration: none; font-weight: 600;">Nicolas Aguirres</a>
+            </p>
         </div>
     </footer>
 
-    <button class="cart-float" id="cartToggle">
+    <button class="cart-float pulse" id="cartToggle">
         🛒 <span id="cartCount">0</span>
     </button>
 
@@ -71,51 +78,40 @@
         </div>
         <div id="cartItems" class="cart-items-container"></div>
         
-        <div class="logistics-box">
-            <h3>MÉTODO DE ENTREGA</h3>
+        <div class="cart-logistics">
+            <h3>LOGÍSTICA DE ENVÍO</h3>
             <div class="method-selector">
-                <button class="method-btn active" id="btnPickup" onclick="setDelivery('pickup')">RETIRO</button>
-                <button class="method-btn" id="btnDelivery" onclick="setDelivery('delivery')">ENVÍO</button>
+                <button class="method-btn active" id="btnPickup" onclick="setDeliveryMethod('pickup')">RETIRO</button>
+                <button class="method-btn" id="btnDelivery" onclick="setDeliveryMethod('delivery')">ENVÍO</button>
             </div>
             
-            <div id="delivery-zones" class="zone-selector-container hidden">
-                <label>Selecciona tu zona:</label>
-                <select id="zoneSelect" onchange="updateCartTotals()">
+            <div id="zoneContainer" class="zone-selector hidden">
+                <label>ZONA EN MENDOZA:</label>
+                <select id="deliveryZone" onchange="calculateTotals()">
                     <option value="1500">Ciudad ($1.500)</option>
                     <option value="1200">Godoy Cruz ($1.200)</option>
                     <option value="1800">Guaymallén ($1.800)</option>
-                    <option value="1000">Luján ($1.000)</option>
+                    <option value="1000">Luján / Chacras ($1.000)</option>
                     <option value="2000">Maipú ($2.000)</option>
                 </select>
             </div>
         </div>
 
         <div class="cart-footer">
-            <div class="price-row"><span>SUBTOTAL:</span><span id="subtotalVal">$0</span></div>
-            <div class="price-row"><span>ENVÍO:</span><span id="shippingVal">$0</span></div>
-            <div class="price-row main-total"><span>TOTAL:</span><span id="totalVal">$0</span></div>
-            <button class="btn-whatsapp" id="orderBtn" onclick="sendOrder()">PEDIR POR WHATSAPP</button>
+            <div class="row"><span>SUBTOTAL:</span><span id="subtotalVal">$0</span></div>
+            <div class="row"><span>ENVÍO:</span><span id="shippingVal">$0</span></div>
+            <div class="row main-total"><span>TOTAL FINAL:</span><span id="totalVal">$0</span></div>
+            <button class="btn-whatsapp" onclick="checkout()">PEDIR POR WHATSAPP 🔥</button>
         </div>
     </div>
 
     <div id="productModal" class="modal">
         <div class="modal-content">
             <div id="modalBody"></div>
-            <div class="modal-price-display">Subtotal: <span id="modalCurrentPrice">$0</span></div>
+            <div class="modal-price-tag">Precio: <span id="modalCurrentPrice">$0</span></div>
             <div class="modal-actions">
-                <button class="confirm-btn" id="confirmAdd">AGREGAR AL PECADO</button>
+                <button class="confirm-btn" id="confirmAdd">CONFIRMAR PECADO</button>
                 <button class="cancel-btn" onclick="closeModal()">CANCELAR</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="ageModal" class="modal">
-        <div class="modal-content age-check">
-            <h2>🔞 CONTROL DE EDAD</h2>
-            <p>Este producto contiene alcohol. ¿Confirmas que eres mayor de 18 años?</p>
-            <div class="modal-actions-column">
-                <button class="confirm-btn" onclick="confirmAge()">SÍ, SOY MAYOR</button>
-                <button class="cancel-btn" onclick="closeAgeModal()">NO, SOY MENOR</button>
             </div>
         </div>
     </div>
