@@ -1,5 +1,5 @@
 /**
- * LIMBO BURGERS v18.0 - FINAL E-COMMERCE ENGINE
+ * LIMBO BURGERS v19.0 GOLD - FINAL ENGINE
  * Desarrollado por Nicolas Aguirres
  */
 
@@ -8,7 +8,7 @@ const IMGS = {
     carne: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80",
     pollo: "https://images.unsplash.com/photo-1610614819513-58e34989848b?w=600&q=80",
     veggie: "https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?w=600&q=80",
-    sides: "recursos visuales/image.png", // RUTA LOCAL OBLIGATORIA
+    sides: "recursos visuales/image.png", // RUTA LOCAL OBLIGATORIA PARA SIDES
     alcohol: "https://images.unsplash.com/photo-1535958636474-b021ee887b13?w=600&q=80",
     soft: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=600&q=80"
 };
@@ -35,7 +35,7 @@ const PRODUCTS = [
     { id: 14, name: "Mushroom Zen", price: 8600, cat: "veggie", isVegan: true, img: IMGS.veggie, desc: "Gírgolas grilladas y hummus de remolacha." },
     { id: 15, name: "Tofu Fire", price: 8300, cat: "veggie", isVegan: true, img: IMGS.veggie, desc: "Tofu marinado en sriracha y sésamo negro." },
 
-    // --- ACOMPAÑAMIENTOS (8) - RUTA LOCAL ---
+    // --- SIDES (8) - IMAGEN LOCAL recursos visuales/image.png ---
     { id: 16, name: "Papas Cheddar", price: 4500, cat: "sides", img: IMGS.sides, desc: "Papas bastón con cheddar y bacon." },
     { id: 17, name: "Papas Trufadas", price: 5200, cat: "sides", img: IMGS.sides, desc: "Aceite de trufa y parmesano." },
     { id: 18, name: "Aros de Cebolla", price: 3800, cat: "sides", img: IMGS.sides, desc: "12 aros crujientes con salsa BBQ." },
@@ -68,8 +68,7 @@ const PRODUCTS = [
     { id: 43, name: "Soda Sifón", price: 1200, cat: "drinks", img: IMGS.soft }
 ];
 
-// --- ESTADO GLOBAL ---
-let cart = JSON.parse(localStorage.getItem('limbo_cart_v18')) || [];
+let cart = JSON.parse(localStorage.getItem('limbo_cart_gold')) || [];
 let deliveryMode = 'pickup';
 let currentItem = null;
 
@@ -91,7 +90,6 @@ function updateBusinessStatus() {
     }
 }
 
-// --- RENDERIZADO ---
 function renderProducts(filter = 'all') {
     const grid = document.getElementById('menu-grid');
     grid.innerHTML = '';
@@ -105,7 +103,7 @@ function renderProducts(filter = 'all') {
                 <img src="${p.img}" class="menu-img" alt="${p.name}">
                 <div class="item-info">
                     <h3>${p.name.toUpperCase()}</h3>
-                    <p>${p.desc || 'Sabor único de Limbo.'}</p>
+                    <p>${p.desc || 'Sabor artesanal premium.'}</p>
                     <span class="price">$${p.price.toLocaleString()}</span>
                     <button class="add-btn" onclick="handleAction(${p.id})">AGREGAR AL PEDIDO</button>
                 </div>
@@ -116,7 +114,7 @@ function renderProducts(filter = 'all') {
 function handleAction(id) {
     const p = PRODUCTS.find(x => x.id === id);
     if(p.isAlcohol) {
-        if(!confirm("🔞 Este producto es para mayores de 18 años. ¿Confirmas tu edad?")) return;
+        if(!confirm("🔞 Debes ser mayor de 18 años para comprar alcohol. ¿Confirmas tu edad?")) return;
     }
     
     if(p.cat === 'burgers' || p.cat === 'veggie') {
@@ -126,7 +124,7 @@ function handleAction(id) {
     }
 }
 
-// --- MODAL DE PERSONALIZACIÓN ---
+// --- MODAL PERSONALIZACIÓN ---
 function openModal(p) {
     currentItem = p;
     const body = document.getElementById('modalBody');
@@ -151,9 +149,9 @@ function openModal(p) {
         </div>
         <div class="opt-group">
             <p style="margin-bottom:8px; font-weight:700;">AÑADIR EXTRAS:</p>
-            <label><input type="checkbox" class="extra" data-p="500" value="Cheddar"> Cheddar (+$500)</label>
-            <label><input type="checkbox" class="extra" data-p="800" value="Bacon"> Bacon (+$800)</label>
-            <label><input type="checkbox" class="extra" data-p="400" value="Huevo"> Huevo (+$400)</label>
+            <label><input type="checkbox" class="extra" data-p="500" value="Cheddar" onchange="calcModalPrice()"> Cheddar (+$500)</label>
+            <label><input type="checkbox" class="extra" data-p="800" value="Bacon" onchange="calcModalPrice()"> Bacon (+$800)</label>
+            <label><input type="checkbox" class="extra" data-p="400" value="Huevo" onchange="calcModalPrice()"> Huevo (+$400)</label>
         </div>`;
     
     document.getElementById('productModal').style.display = 'flex';
@@ -180,13 +178,13 @@ document.getElementById('confirmAdd').onclick = () => {
         extraPrice += parseInt(ex.dataset.p);
     });
 
-    addToCart(currentItem.id, extras.join(", ") || "Clásica", extraPrice);
+    addToCart(currentItem.id, extras.join(", ") || "Tradicional", extraPrice);
     closeModal();
 };
 
 function closeModal() { document.getElementById('productModal').style.display = 'none'; }
 
-// --- LOGÍSTICA DEL CARRITO ---
+// --- LOGÍSTICA CARRITO ---
 function setDeliveryMethod(method) {
     deliveryMode = method;
     document.getElementById('btnPickup').classList.toggle('active', method === 'pickup');
@@ -199,6 +197,8 @@ function addToCart(id, detail, extra) {
     const p = PRODUCTS.find(x => x.id === id);
     cart.push({ ...p, cartId: Date.now(), finalPrice: p.price + extra, detail });
     calculateTotals();
+    // Feedback visual: abrir el carrito al agregar
+    document.getElementById('cartPanel').classList.add('active');
 }
 
 function removeFromCart(cartId) {
@@ -207,7 +207,7 @@ function removeFromCart(cartId) {
 }
 
 function calculateTotals() {
-    localStorage.setItem('limbo_cart_v18', JSON.stringify(cart));
+    localStorage.setItem('limbo_cart_gold', JSON.stringify(cart));
     document.getElementById('cartCount').innerText = cart.length;
     
     const container = document.getElementById('cartItems');
@@ -217,13 +217,13 @@ function calculateTotals() {
     cart.forEach(item => {
         subtotal += item.finalPrice;
         container.innerHTML += `
-            <div style="padding:12px 0; border-bottom:1px solid #222;">
+            <div style="padding:12px 0; border-bottom:1px solid #333; margin-bottom:5px;">
                 <div style="display:flex; justify-content:space-between; font-weight:700;">
                     <span>${item.name}</span>
                     <span>$${item.finalPrice.toLocaleString()}</span>
                 </div>
                 <small style="color:var(--text-gray)">${item.detail}</small>
-                <button onclick="removeFromCart(${item.cartId})" style="color:red; background:none; border:none; cursor:pointer; display:block; margin-top:5px;">Eliminar</button>
+                <button onclick="removeFromCart(${item.cartId})" style="color:red; background:none; border:none; cursor:pointer; display:block; margin-top:5px; font-size:0.8rem;">Eliminar</button>
             </div>`;
     });
 
@@ -233,14 +233,15 @@ function calculateTotals() {
     document.getElementById('totalVal').innerText = `$${(subtotal + shipping).toLocaleString()}`;
 }
 
-// --- WHATSAPP FINAL ---
+// --- CHECKOUT & LIMPIEZA POST-COMPRA ---
 function checkout() {
     if(cart.length === 0) return alert("El carrito está vacío.");
+    
     const ship = deliveryMode === 'delivery' ? parseInt(document.getElementById('deliveryZone').value) : 0;
     const zoneName = document.querySelector('#deliveryZone option:checked').text;
     const sub = cart.reduce((a, b) => a + b.finalPrice, 0);
 
-    let msg = "🔥 *NUEVO PEDIDO - LIMBO BURGERS v18* \n\n";
+    let msg = "🔥 *NUEVO PEDIDO - LIMBO BURGERS v19.0 GOLD* \n\n";
     cart.forEach((i, idx) => {
         msg += `*${idx+1}. ${i.name}* \n   _${i.detail}_ \n   $${i.finalPrice.toLocaleString()}\n\n`;
     });
@@ -248,12 +249,22 @@ function checkout() {
     msg += `──────────────────\n`;
     msg += `🛵 *ENTREGA:* ${deliveryMode === 'pickup' ? 'Retiro en Local' : 'Envío ('+zoneName+')'}\n`;
     msg += `💰 *TOTAL FINAL: $${(sub + ship).toLocaleString()}*\n\n`;
-    msg += `_Enviado desde Mendoza, Argentina_`;
+    msg += `_Mendoza, Argentina_`;
 
     window.open(`https://wa.me/5492615349682?text=${encodeURIComponent(msg)}`, '_blank');
+
+    // Tarea específica solicitada: Vaciar carrito tras el pedido
+    clearCartState();
 }
 
-// --- INICIALIZACIÓN ---
+function clearCartState() {
+    cart = [];
+    localStorage.removeItem('limbo_cart_gold');
+    calculateTotals();
+    document.getElementById('cartPanel').classList.remove('active');
+}
+
+// --- EVENTOS UI ---
 document.getElementById('cartToggle').onclick = () => document.getElementById('cartPanel').classList.add('active');
 document.getElementById('closeCart').onclick = () => document.getElementById('cartPanel').classList.remove('active');
 

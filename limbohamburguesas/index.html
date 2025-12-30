@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Limbo Burgers | El sabor del PECADO</title>
+    <title>Limbo Burgers v19.0 | Gold Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -11,7 +11,7 @@
     <header class="navbar">
         <div class="nav-container">
             <a href="#" class="logo">LIMBO<span>BURGERS</span></a>
-            <div id="business-status-container" class="status-header">
+            <div id="status-business-container" class="status-header">
                 <span id="led-indicator" class="led"></span>
                 <span id="status-text">VERIFICANDO...</span>
             </div>
@@ -23,7 +23,7 @@
         <div class="hero-content">
             <h1>EL PECADO DE <span>MENDOZA</span></h1>
             <p>Parrilla a Leña • 100% Carne Argentina</p>
-            <p>El pecado en cada mordida</p>
+            <p class="tagline">El pecado en cada mordida</p>
         </div>
     </section>
 
@@ -44,14 +44,10 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3 class="logo">LIMBO<span>BURGERS</span></h3>
-                <p>Un Sabor que parece pecado</p>
+                <p>El sabor que parece pecado.</p>
                 <div class="social-links">
-                    <a href="#" target="_blank">
-                        <img src="recursos visuales/facebook.png" alt="Facebook">
-                    </a>
-                    <a href="#" target="_blank">
-                        <img src="recursos visuales/logotipo-de-instagram.png" alt="Instagram">
-                    </a>
+                    <a href="#" target="_blank"><img src="recursos visuales/facebook.png" alt="Facebook"></a>
+                    <a href="#" target="_blank"><img src="recursos visuales/logotipo-de-instagram.png" alt="Instagram"></a>
                 </div>
             </div>
             <div class="footer-section">
@@ -62,7 +58,7 @@
         </div>
         <div class="footer-bottom">
             <p>&copy; 2025 Limbo Burgers. Desarrollado por 
-                <a href="https://portfolionicolasaguirres.netlify.app/" target="_blank" style="color: var(--primary-fire); text-decoration: none; font-weight: 600;">Nicolas Aguirres</a>
+                <a href="https://portfolionicolasaguirres.netlify.app/" target="_blank" class="portfolio-link">Nicolas Aguirres</a>
             </p>
         </div>
     </footer>
@@ -76,6 +72,7 @@
             <h2>MI PEDIDO</h2>
             <button id="closeCart">✕</button>
         </div>
+        
         <div id="cartItems" class="cart-items-container"></div>
         
         <div class="cart-logistics">
@@ -108,7 +105,7 @@
     <div id="productModal" class="modal">
         <div class="modal-content">
             <div id="modalBody"></div>
-            <div class="modal-price-tag">Precio: <span id="modalCurrentPrice">$0</span></div>
+            <div class="modal-price-tag">Subtotal: <span id="modalCurrentPrice">$0</span></div>
             <div class="modal-actions">
                 <button class="confirm-btn" id="confirmAdd">CONFIRMAR PECADO</button>
                 <button class="cancel-btn" onclick="closeModal()">CANCELAR</button>
